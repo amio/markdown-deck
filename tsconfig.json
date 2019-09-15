@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+
+    "outDir": "dist",
+
+    "sourceMap":true,
+    "allowJs":true,
+
+    "moduleResolution":"node",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
+  }
+}
