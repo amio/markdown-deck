@@ -1,35 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- <script src="/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-  <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script> -->
-  <script type="module" src="dist/index.min.js"></script>
-  <title>markdown-slides sample</title>
-  <!-- <script>
-    setTimeout(() => {
-      const slidesEl = document.querySelector('#ei')
-      slidesEl.innerHTML = '# eiyo'
-    }, 3000)
-  </script> -->
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <script src="/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script> -->
+    <script type="module" src="dist/index.min.js"></script>
+    <title>markdown-slides sample</title>
+    <style>
+      html, body, #slides { height: 100%; margin: 0 }
+    </style>
+  </head>
 
   <body>
-    <markdown-slides id="ei" style="border: 1px solid red">
+    <markdown-slides id="slides">
       <script type="text/markdown">
         # Hello
-        -----
-        - eiyo
-        - himo
+        `<markdown-slides />`
+        ---
+        ## Usage
+        ```javascript
+        <markdown-slides>
+          <script type="text/markdown">
+            # Title
+            ---
+            end
+          </scrpt>
+        </markdown-slides>
+        ```
+        ---
+        ## Attributes
+        ---
+        __`markdown`__
+        the markdown text for slides
+
+        ```
+        <markdown-slides markdown="# Title" />
+        ```
+        ---
+        __`index`__
+
+        current page index
+        ```
+        <markdown-slides
+            markdown="# Title\n---\n# END"
+            index="1"
+        />
+        ```
         ---
         ## some day
         This demo uses a `<script>` tag.
       </script>
     </markdown-slides>
-
-    <!-- <my-element>sdf</my-element> -->
   </body>
 
 </html>

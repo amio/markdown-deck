@@ -6,6 +6,7 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 export class MarkdownSlides extends LitElement {
   @property({ type: String }) markdown: string  // the markdown to parse
   @property({ type: Number }) index = 0         // current slide index
+  @property({ type: Boolean }) dark: boolean    // invert slides color
   @property({ type: Boolean }) hash: boolean    // sync with location hash
   @property({ type: Array }) _pages = []        // splited markdown
 
@@ -14,10 +15,55 @@ export class MarkdownSlides extends LitElement {
       :host {
         display: block;
         min-height: 400px;
+        display: grid;
+        grid-template-rows: 10% auto 20%;
+        grid-template-columns: 10% auto 10%;
+        --font-family: "Source Sans Pro", sans-serif;
+        background-color: white;
       }
-      .deck {
-        height: 100%;
+      .slide {
+        grid-row: 2;
+        grid-column: 2;
+        justify-self: center;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .slide {
+        font: 32px/1.8em var(--font-family);
+      }
+      .slide > * {
+        margin: 0;
+      }
+
+      h1 { font: 4em/1.6em var(--font-family) }
+      h2 { font: 3em/1.6em var(--font-family) }
+      h3 { font: 2em/1.6em var(--font-family) }
+      h4 { font: 1.4em/1.6em var(--font-family) }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+      }
+      li {
+        text-align: left;
+      }
+      code {
+        display: inline-block;
+        background: #E7E7E7;
+        padding: 0 0.2em;
+        margin: 0 0.2em;
+        border-radius: 0.3em;
+        line-height: 1.4em;
+      }
+      pre code {
+        padding: 0.8em 1.2em;
+      }
+      .slide > p {
+        text-align: justify;
+        margin-bottom: 5vh !important;
       }
     `
   }
@@ -52,13 +98,20 @@ export class MarkdownSlides extends LitElement {
   }
 
   _onKeydown = (ev) => {
+    // console.log(ev)
     switch (ev.code) {
       case 'ArrowRight':
       case 'Space':
-        this._switchSlide('next')
-        break
+        if (ev.shiftKey) {
+          return this._switchSlide('prev')
+        } else {
+          return this._switchSlide('next')
+        }
       case 'ArrowLeft':
-        this._switchSlide('prev')
+        return this._switchSlide('prev')
+      case 'KeyI':
+      case 'KeyD':
+        return this.dark = !this.dark
     }
   }
 
@@ -77,38 +130,42 @@ export class MarkdownSlides extends LitElement {
     }
 
     // prevent index overflow
-    if (targetIndex < 0) {
-      targetIndex = 0
-    }
-
     if (targetIndex >= this._pages.length) {
       targetIndex = this._pages.length - 1
+    }
+    if (targetIndex < 0) {
+      targetIndex = 0
     }
 
     this.index = targetIndex
   }
 
   render() {
-    // const index = this.index >= pages.length ? pages.length - 1 : this.index
+    if (this._pages.length === 0) {
+      return html``
+    }
 
     const markup = marked(this._pages[this.index])
 
     return html`
-      <div class="deck">
-        ${unsafeHTML(markup)}
-      </div>
+      <style>
+        :host {
+          ${this.dark ? 'filter: invert(90%)' : ''}
+        }
+      </style>
+      <section class="slide">${unsafeHTML(markup)}</section>
       <slot hidden @slotchange=${() => this.requestUpdate()}></slot>
     `;
   }
 }
 
 function trimIndent (text: string): string {
-  const lines = text.split('\n').filter(line => line.length > 0)
+  const lines = text.split('\n').filter(line => line.trim().length > 0)
 
   const indentCount = lines.reduce((accu: number, curr: string): number => {
     const leadingIndentCount = curr.search(/\S/)
-    return leadingIndentCount > accu ? leadingIndentCount : accu
-  }, 0)
+    return leadingIndentCount < accu ? leadingIndentCount : accu
+  }, lines[0].length)
 
   const indentChars = lines[0].substr(0, indentCount)
   return lines.map(line => line.replace(indentChars, '')).join('\n')
