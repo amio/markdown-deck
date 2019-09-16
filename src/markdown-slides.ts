@@ -72,6 +72,7 @@ export class MarkdownSlides extends LitElement {
 
     if (this.hash) {
       this.index = parseInt(location.hash.replace('#', ''), 10) || 0
+      setLocationHash(this.index)
     }
 
     this._bindShortcuts()
