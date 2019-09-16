@@ -27,8 +27,8 @@ export class MarkdownSlides extends LitElement {
         height: 100%;
         width: 100%;
         display: grid;
-        grid-template-rows: 10% auto 15%;
-        grid-template-columns: 10% auto 10%;
+        grid-template-rows: 5% auto 10%;
+        grid-template-columns: 0 auto 0;
         background-color: white;
       }
       .slide {
