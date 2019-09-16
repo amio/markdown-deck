@@ -1,13 +1,14 @@
 import marked from 'marked'
 import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
+import themeDefault from './theme-default'
 
 @customElement('markdown-slides')
 export class MarkdownSlides extends LitElement {
   @property({ type: String }) markdown: string  // the markdown to parse
   @property({ type: Number }) index = 0         // current slide index
-  @property({ type: Boolean }) dark: boolean    // invert slides color
   @property({ type: Boolean }) hash: boolean    // sync with location hash
+  @property({ type: Boolean }) invert: boolean  // invert slides color
   @property({ type: Array }) _pages = []        // splited markdown
 
   static get styles () {
@@ -15,10 +16,19 @@ export class MarkdownSlides extends LitElement {
       :host {
         display: block;
         min-height: 400px;
+      }
+      .invert {
+        filter: invert(100%);
+      }
+      .invert img {
+        filter: invert(100%);
+      }
+      .deck {
+        height: 100%;
+        width: 100%;
         display: grid;
-        grid-template-rows: 10% auto 20%;
+        grid-template-rows: 10% auto 15%;
         grid-template-columns: 10% auto 10%;
-        --font-family: "Source Sans Pro", sans-serif;
         background-color: white;
       }
       .slide {
@@ -31,40 +41,14 @@ export class MarkdownSlides extends LitElement {
         align-items: center;
         justify-content: center;
       }
-      .slide {
-        font: 32px/1.8em var(--font-family);
-      }
       .slide > * {
         margin: 0;
-      }
-
-      h1 { font: 4em/1.6em var(--font-family) }
-      h2 { font: 3em/1.6em var(--font-family) }
-      h3 { font: 2em/1.6em var(--font-family) }
-      h4 { font: 1.4em/1.6em var(--font-family) }
-      h1, h2, h3, h4, h5, h6 {
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: -0.02em;
-      }
-      li {
-        text-align: left;
-      }
-      code {
-        display: inline-block;
-        background: #E7E7E7;
-        padding: 0 0.2em;
-        margin: 0 0.2em;
-        border-radius: 0.3em;
-        line-height: 1.4em;
-      }
-      pre code {
-        padding: 0.8em 1.2em;
       }
       .slide > p {
         text-align: justify;
         margin-bottom: 5vh !important;
       }
+      ${ themeDefault }
     `
   }
 
@@ -116,7 +100,7 @@ export class MarkdownSlides extends LitElement {
         return this._switchSlide('prev')
       case 'KeyI':
       case 'KeyD':
-        return this.dark = !this.dark
+        return this.invert = !this.invert
     }
   }
 
@@ -154,12 +138,11 @@ export class MarkdownSlides extends LitElement {
 
     return html`
       <style>
-        :host {
-          ${this.dark ? 'filter: invert(90%)' : ''}
-        }
         ${ unsafeCSS(this._readCustomStyles()) }
       </style>
-      <section class="slide">${unsafeHTML(markup)}</section>
+      <div class="deck ${this.invert ? 'invert' : ''}">
+        <section class="slide">${unsafeHTML(markup)}</section>
+      </div>
       <slot hidden @slotchange=${() => this.requestUpdate()}></slot>
     `;
   }
