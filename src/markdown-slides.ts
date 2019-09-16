@@ -166,9 +166,11 @@ export class MarkdownSlides extends LitElement {
 }
 
 function trimIndent (text: string): string {
-  const lines = text.split('\n').filter(line => line.trim().length > 0)
+  const lines = text.split('\n')
 
   const indentCount = lines.reduce((accu: number, curr: string): number => {
+    if (curr.trim().length === 0) return accu
+
     const leadingIndentCount = curr.search(/\S/)
     return leadingIndentCount < accu ? leadingIndentCount : accu
   }, lines[0].length)
