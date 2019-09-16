@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "bili -w --format iife & es-dev-server -a index.html -o",
-    "build": "rm -rf dist && bili --format iife --minify"
+    "build": "rm -rf dist && bili --format iife --minify",
+    "now-build": "npm run build && rm -rf public && mkdir public && cp -R dist public && cp index.html public"
   },
   "dependencies": {
     "@webcomponents/webcomponentsjs": "2.2.10",
