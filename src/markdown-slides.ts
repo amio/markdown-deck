@@ -7,8 +7,8 @@ import themeDefault from './theme-default'
 export class MarkdownSlides extends LitElement {
   @property({ type: String }) markdown: string  // the markdown to parse
   @property({ type: Number }) index = 0         // current slide index
-  @property({ type: Boolean }) hash: boolean    // sync with location hash
-  @property({ type: Boolean }) invert: boolean  // invert slides color
+  @property({ type: Boolean }) hash = false     // sync with location hash
+  @property({ type: Boolean }) invert = false   // invert slides color
   @property({ type: Array }) _pages = []        // splited markdown
 
   static get styles () {
@@ -69,6 +69,11 @@ export class MarkdownSlides extends LitElement {
 
   connectedCallback () {
     super.connectedCallback()
+
+    if (this.hash) {
+      this.index = parseInt(location.hash.replace('#', ''), 10) || 0
+    }
+
     this._bindShortcuts()
     this._updatePages()
   }
@@ -127,6 +132,10 @@ export class MarkdownSlides extends LitElement {
     }
 
     this.index = targetIndex
+
+    if (this.hash) {
+      setLocationHash(this.index)
+    }
   }
 
   render() {
@@ -168,4 +177,14 @@ function splitMarkdownToPages (markdown: string): Array<string> {
     .filter(page => Boolean(page.trim()))
 
   return pages
+}
+
+function setLocationHash (hash: any) {
+  const hashString = '#' + String(hash)
+
+  if (history.replaceState) {
+    history.replaceState(null, null, hashString)
+  } else {
+    location.hash = hashString
+  }
 }
