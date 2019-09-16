@@ -95,6 +95,7 @@ export class MarkdownSlides extends LitElement {
     // console.log(ev)
     switch (ev.code) {
       case 'ArrowRight':
+      case 'ArrowDown':
       case 'Space':
         if (ev.shiftKey) {
           return this._switchSlide('prev')
@@ -102,6 +103,7 @@ export class MarkdownSlides extends LitElement {
           return this._switchSlide('next')
         }
       case 'ArrowLeft':
+      case 'ArrowUp':
         return this._switchSlide('prev')
       case 'KeyI':
       case 'KeyD':
