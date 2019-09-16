@@ -1,5 +1,5 @@
 import marked from 'marked'
-import { LitElement, html, css, property, customElement } from 'lit-element'
+import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 
 @customElement('markdown-slides')
@@ -71,6 +71,11 @@ export class MarkdownSlides extends LitElement {
   _readMarkdownScript () {
     const scriptTag = this.querySelector('script[type="text/markdown"]')
     return scriptTag ? trimIndent(scriptTag.textContent) : ''
+  }
+
+  _readCustomStyles () {
+    const styleTag = this.querySelector('style')
+    return styleTag ? styleTag.textContent : ''
   }
 
   _updatePages () {
@@ -152,6 +157,7 @@ export class MarkdownSlides extends LitElement {
         :host {
           ${this.dark ? 'filter: invert(90%)' : ''}
         }
+        ${ unsafeCSS(this._readCustomStyles()) }
       </style>
       <section class="slide">${unsafeHTML(markup)}</section>
       <slot hidden @slotchange=${() => this.requestUpdate()}></slot>
