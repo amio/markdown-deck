@@ -14,44 +14,107 @@
   </head>
 
   <body>
-    <markdown-slides id="slides">
+    <markdown-slides id="slides" hash>
       <script type="text/markdown">
-        # Hello
-        `<markdown-slides />`
-        ---
-        ## Usage
-        ```javascript
-        <markdown-slides>
-          <script type="text/markdown">
-            # Title
-            ---
-            end
-          </scrpt>
-        </markdown-slides>
-        ```
-        ---
-        ## Attributes
-        ---
-        __`markdown`__
-        the markdown text for slides
+# Badgen
 
-        ```
-        <markdown-slides markdown="# Title" />
-        ```
-        ---
-        __`index`__
+Fast badge generating service
 
-        current page index
-        ```
-        <markdown-slides
-            markdown="# Title\n---\n# END"
-            index="1"
-        />
-        ```
-        ---
-        ## some day
-        This demo uses a `<script>` tag.
+---
+
+<p>
+  <img width="240px" src="https://avatars3.githubusercontent.com/u/215282?s=460&v=4" />
+</p>
+
+晋 “**Amio**” 晓炜
+
+---
+
+Badgen in **5 minutes**
+
+---
+
+[![](https://badgen.net/badge/build/passing/green)](https://badgen.net)
+
+---
+
+###### **bad**ge **gen**erator
+
+![](https://badgen.net/badge/-/badgen?label&color=orange)
+
+---
+
+> That's a <b style="color: red">service</b>, that's a <b style="color: red">library</b>, hooorey!
+
+-- @tunnckoCore
+
+---
+
+## badgen.net
+
+- https://badgen.net <br/> ![](https://badgen.net/badge/classic/badgen.net/purple)
+
+- https://flat.badgen.net <br/> ![](https://flat.badgen.net/badge/flat/flat.badgen.net/purple)
+
+---
+
+## badge builder
+
+[badgen.net/builder](https://badgen.net/builder)
+
+---
+
+__`npm i badgen`__
+
+![](https://badgen.net/badge/github/badgen%2Fbadgen?icon=github&label)
+
+---
+
+```javascript
+const svgString = badgen({
+  label: 'npm',
+  labelColor: 'ADF'
+  status: 'v1.2.3',
+  color: 'blue',
+  style: 'flat',
+  icon: 'data:image/svg+xml;base64...',
+  iconWidth: 13,
+})
+```
+
+---
+
+## runkit / https
+
+> You serve data, I serve badge
+
+https://badgen.net/https
+
+---
+
+## Docker
+
+```
+docker run -p 3000:3000 amio/badgen
+```
+
+---
+
+<p>
+<img style="height:100px" src="https://badgen.net/badge/github/amio/blue?icon=github&label" />
+</p>
+
+`console.js`, `nls`, `font-mess`, *`markdown-slides`*
+
+---
+
+## Thanks!
+
+https://badgen-5min.now.sh
       </script>
+      <style>
+        img[src*="badgen.net"] { height: 40px }
+      </style>
     </markdown-slides>
   </body>
 
