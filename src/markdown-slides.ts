@@ -105,7 +105,11 @@ export class MarkdownSlides extends LitElement {
         }
       case 'ArrowLeft':
       case 'ArrowUp':
-        return this._switchSlide('prev')
+        if (ev.shiftKey) {
+          return this._switchSlide('next')
+        } else {
+          return this._switchSlide('prev')
+        }
       case 'KeyI':
       case 'KeyD':
         return this.invert = !this.invert
