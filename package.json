@@ -1,7 +1,8 @@
 {
-  "name": "1xdehd.run",
+  "name": "markdown-slides",
   "version": "0.0.0",
-  "private": true,
+  "description": "the web component for presenters",
+  "repository": "amio/markdown-slides",
   "scripts": {
     "start": "bili -w --format iife & es-dev-server -a index.html -o",
     "build": "rm -rf dist && bili --format iife --minify",
