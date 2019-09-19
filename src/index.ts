@@ -1,1 +1,1 @@
-import './markdown-slides.ts'
+import './markdown-deck.ts'

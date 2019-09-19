@@ -3,8 +3,8 @@ import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-e
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import themeDefault from './theme-default'
 
-@customElement('markdown-slides')
-export class MarkdownSlides extends LitElement {
+@customElement('markdown-deck')
+export class MarkdownDeck extends LitElement {
   @property({ type: String }) markdown: string  // the markdown to parse
   @property({ type: Number }) index = 0         // current slide index
   @property({ type: Boolean }) hash = false     // sync with location hash

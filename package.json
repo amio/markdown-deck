@@ -1,8 +1,8 @@
 {
-  "name": "markdown-slides",
+  "name": "markdown-deck",
   "version": "0.0.0",
   "description": "the web component for presenters",
-  "repository": "amio/markdown-slides",
+  "repository": "amio/markdown-deck",
   "scripts": {
     "start": "bili -w --format iife & es-dev-server -a index.html -o",
     "build": "rm -rf dist && bili --format iife --minify",
