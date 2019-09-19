@@ -6,6 +6,7 @@ import themeDefault from './theme-default'
 @customElement('markdown-deck')
 export class MarkdownDeck extends LitElement {
   @property({ type: String }) markdown: string  // the markdown to parse
+  @property({ type: String }) src: string       // the markdown file url to load
   @property({ type: Number }) index = 0         // current slide index
   @property({ type: Boolean }) hash = false     // sync with location hash
   @property({ type: Boolean }) invert = false   // invert slides color
@@ -75,6 +76,10 @@ export class MarkdownDeck extends LitElement {
       setLocationHash(this.index)
     }
 
+    if (this.markdown === undefined && this.src) {
+      this._loadMarkdownFile(this.src)
+    }
+
     this._bindShortcuts()
     this._updatePages()
   }
@@ -90,6 +95,19 @@ export class MarkdownDeck extends LitElement {
 
   _unbindShortcuts () {
     window.removeEventListener('keydown', this._onKeydown)
+  }
+
+  _loadMarkdownFile (src: string) {
+    fetch(src, { mode: 'cors' })
+      .then(resp => {
+        if (resp.status === 200) return resp.text()
+        throw new Error(`(fetching ${src}) ${resp.statusText}`)
+      })
+      .then(text => {
+        this.markdown = text
+        this._updatePages()
+      })
+      .catch(console.error)
   }
 
   _onKeydown = (ev) => {
@@ -159,7 +177,7 @@ export class MarkdownDeck extends LitElement {
       <div class="deck ${this.invert ? 'invert' : ''}">
         <section class="slide">${unsafeHTML(markup)}</section>
       </div>
-      <slot hidden @slotchange=${() => this.requestUpdate()}></slot>
+      <slot @slotchange=${() => this.requestUpdate()}></slot>
     `;
   }
 }
