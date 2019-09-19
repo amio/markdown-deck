@@ -4,9 +4,10 @@
   "description": "the web component for presenters",
   "repository": "amio/markdown-deck",
   "scripts": {
-    "start": "bili -w --format iife & es-dev-server -a index.html -o",
+    "start": "bili -w --format iife & es-dev-server -a demo/index.html -o",
     "build": "rm -rf dist && bili --format iife --minify",
-    "now-build": "npm run build && rm -rf public && mkdir public && cp -R dist public && cp index.html public"
+    "build-deck": "rm -rf public && mkdir public && cp -R dist public && cp index.html deck.md public",
+    "now-build": "npm run build && npm run build-deck"
   },
   "dependencies": {
     "@webcomponents/webcomponentsjs": "2.2.10",
