@@ -2,6 +2,7 @@ import marked from 'marked'
 import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import themeDefault from './theme-default'
+import styleDeck, { DEFAULT_WIDTH, DEFAULT_HEIGHT } from './style-deck'
 
 @customElement('markdown-deck')
 export class MarkdownDeck extends LitElement {
@@ -13,44 +14,11 @@ export class MarkdownDeck extends LitElement {
   @property({ type: Boolean }) invert = false   // invert slides color
 
   _pages = []        // splited markdown
+  _scale = 1
 
   static get styles () {
     return css`
-      :host {
-        display: block;
-        min-height: 400px;
-      }
-      .invert {
-        filter: invert(100%);
-      }
-      .invert img {
-        filter: invert(100%);
-      }
-      .deck {
-        height: 100%;
-        width: 100%;
-        display: grid;
-        grid-template-rows: 5% auto 10%;
-        grid-template-columns: 0 auto 0;
-        background-color: white;
-      }
-      .slide {
-        grid-row: 2;
-        grid-column: 2;
-        justify-self: center;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-      .slide > * {
-        margin: 0;
-      }
-      .slide > p {
-        text-align: justify;
-        margin-bottom: 5vh !important;
-      }
+      ${ styleDeck }
       ${ themeDefault }
     `
   }
@@ -72,6 +40,8 @@ export class MarkdownDeck extends LitElement {
 
   connectedCallback () {
     super.connectedCallback()
+
+    this._setScale()
 
     if (this.markdown === undefined && this.src) {
       this._loadMarkdownFile(this.src)
@@ -100,6 +70,13 @@ export class MarkdownDeck extends LitElement {
 
   _unbindShortcuts () {
     window.removeEventListener('keydown', this._onKeydown)
+  }
+
+  _setScale () {
+    const { width, height } = this.parentElement.getBoundingClientRect()
+    const maxScale = Math.min(width / DEFAULT_WIDTH, height / DEFAULT_HEIGHT)
+    console.log(width, DEFAULT_WIDTH, height, DEFAULT_HEIGHT)
+    this._scale = maxScale * 0.9
   }
 
   _loadMarkdownFile (src: string) {
@@ -175,9 +152,12 @@ export class MarkdownDeck extends LitElement {
 
     const markup = marked(this._pages[this.index])
 
+    console.log(this.index, this._scale)
+
     return html`
       <style>
         ${ unsafeCSS(this._readCustomStyles()) }
+        section { transform: scale(${this._scale}) }
       </style>
       <div class="deck ${this.invert ? 'invert' : ''}">
         <section class="slide">${unsafeHTML(markup)}</section>

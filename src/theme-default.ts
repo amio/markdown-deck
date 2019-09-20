@@ -3,7 +3,7 @@ import { css } from 'lit-element'
 export default css`
   .slide {
     --font-family: "Source Sans Pro", sans-serif;
-    font: 42px/1.6em var(--font-family);
+    font: 36px/1.6em var(--font-family);
   }
 
   h1 { font: 3.6em/1.6em var(--font-family) }
@@ -40,6 +40,7 @@ export default css`
 
   pre code {
     padding: 0.8em 1.2em;
+    font-size: 24px;
   }
 
   a {
@@ -49,5 +50,11 @@ export default css`
 
   a:hover {
     text-decoration: underline;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 `
