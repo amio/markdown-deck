@@ -8,9 +8,11 @@ export class MarkdownDeck extends LitElement {
   @property({ type: String }) markdown: string  // the markdown to parse
   @property({ type: String }) src: string       // the markdown file url to load
   @property({ type: Number }) index = 0         // current slide index
-  @property({ type: Boolean }) hash = false     // sync with location hash
+  @property({ type: Boolean }) hotkey = false   // sync with location hash
+  @property({ type: Boolean }) hashsync = false // sync with location hash
   @property({ type: Boolean }) invert = false   // invert slides color
-  @property({ type: Array }) _pages = []        // splited markdown
+
+  _pages = []        // splited markdown
 
   static get styles () {
     return css`
@@ -71,16 +73,19 @@ export class MarkdownDeck extends LitElement {
   connectedCallback () {
     super.connectedCallback()
 
-    if (this.hash) {
-      this.index = parseInt(location.hash.replace('#', ''), 10) || 0
-      setLocationHash(this.index)
-    }
-
     if (this.markdown === undefined && this.src) {
       this._loadMarkdownFile(this.src)
     }
 
-    this._bindShortcuts()
+    if (this.hashsync) {
+      this.index = parseInt(location.hash.replace('#', ''), 10) || 0
+      setLocationHash(this.index)
+    }
+
+    if (this.hotkey) {
+      this._bindShortcuts()
+    }
+
     this._updatePages()
   }
 
@@ -158,7 +163,7 @@ export class MarkdownDeck extends LitElement {
 
     this.index = targetIndex
 
-    if (this.hash) {
+    if (this.hashsync) {
       setLocationHash(this.index)
     }
   }
