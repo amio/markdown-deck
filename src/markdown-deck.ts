@@ -11,16 +11,19 @@ const ORIGINAL_HEIGHT = 600
 
 @customElement('markdown-deck')
 export class MarkdownDeck extends LitElement {
-  @property({ type: String }) markdown: string  // the markdown to parse
-  @property({ type: String }) src: string       // the markdown file url to load
-  @property({ type: Number }) index = 0         // current slide index
-  @property({ type: Boolean }) hashsync = false // sync with location hash
-  @property({ type: Boolean }) hotkey = false   // hotkey support
-  @property({ type: Boolean }) invert = false   // invert slides color
+  @property({ type: String }) markdown: string      // the markdown to parse
+  @property({ type: String }) src: string           // the markdown file url to load
+  @property({ type: Number }) index = 0             // current slide index
+  @property({ type: Boolean }) hashsync = false     // sync with location hash
+  @property({ type: Boolean }) hotkey = false       // hotkey support
+  @property({ type: Boolean }) invert = false       // invert slides color
 
-  _scale = 1        // for auto scaling canvas to fit container
-  _pages = []       // splited markdown
-  _touchStart: any  // handle for remove swipe listener
+  // watched private properties
+  @property({ type: Number }) _scale = 1            // scale canvas to fit container
+  @property({ type: Array }) _pages = []            // split markdown to pages
+
+  // private properties
+  _touchStart: { clientX: number, clientY: number } // handle for remove swipe listener
 
   static get styles () {
     return deckStyle(themeDefault, themeCodeDefault)
@@ -89,7 +92,7 @@ export class MarkdownDeck extends LitElement {
       return true
     }
 
-    const watched = ['markdown', 'index']
+    const watched = ['markdown', 'index', '_scale', '_pages']
     return watched.some(attr => changedProps.has(attr))
   }
 
@@ -133,7 +136,7 @@ export class MarkdownDeck extends LitElement {
   }
 
   _setScale () {
-    const { width, height } = this.parentElement.getBoundingClientRect()
+    const { width, height } = this.getBoundingClientRect()
 
     const maxScale = width > height
       ? Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
