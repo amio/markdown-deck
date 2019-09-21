@@ -2,6 +2,11 @@
 
 The web component for presenters.
 
+- Standard web component
+- Keyboard shortcuts & touch gestures
+- Support inline or external markdown
+- Customizable with web standard
+
 ## Usage
 
 1. Import script from https://unpkg.com/markdown-deck/dist/index.min.js
@@ -24,13 +29,13 @@ The web component for presenters.
     </markdown-deck>
     ```
 
-    or use `markdown` attr:
+    or use `markdown` attribute on `<markdown-deck />`:
 
     ```html
     <markdown-deck markdown="# Awesome Presentation" />
     ```
 
-    or load markdown file with `src` attr:
+    or load markdown file with `src` attribute:
 
     ```html
     <markdown-deck src="deck.md" />
@@ -38,31 +43,28 @@ The web component for presenters.
 
 ### Attributes
 
-- `markdown="{string}"` the markdown to parse (will override contents in `<script type="text/markdown"`)
+- `markdown="{string}"` the markdown to parse (override contents in `<script type="text/markdown"`)
 - `src="{string}"` load markdown file from url
 - `index="{number}"` current slide index (starting from 0)
 - `hashsync` enable syncing index with location hash
 - `hotkey` enable hotkey support
 
-#### Hotkeys
+### Hotkeys
 
-- prev / next
-  - <key>🠘</key> / <key>🠚</key>
-  - <key>J</key> / <key>L</key>
-- first / last
-  - <key>🠙</key> / <key>🠛</key>
-  - <key>J</key> / <key>L</key>
-- invert color (dark theme)
-  - <key>I</key> or <key>D</key>
+- __prev / next__: <kbd>⯇</kbd> / <kbd>⯈</kbd> or <kbd>J</kbd> / <kbd>L</kbd>
+- __first / last__: <kbd>⯅</kbd> / <kbd>⯆</kbd>
+- __invert color (dark theme)__: <kbd>I</kbd> or <kbd>D</kbd>
 
-### Custom Styles
+### Customize
 
-Use `<style />` inside `<markdown-deck />` to apply custom styles:
+- __Custom styles__
 
-```html
-<markdown-deck>
-  <style>
-    img[src*="badgen.net"] { height: 40px }
-  </style>
-</markdown-deck>
-```
+    Use `<style />` inside `<markdown-deck />` to apply custom styles:
+
+    ```html
+    <markdown-deck>
+      <style>
+        img[src*="badgen.net"] { height: 40px }
+      </style>
+    </markdown-deck>
+    ```
