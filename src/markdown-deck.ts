@@ -14,12 +14,13 @@ export class MarkdownDeck extends LitElement {
   @property({ type: String }) markdown: string  // the markdown to parse
   @property({ type: String }) src: string       // the markdown file url to load
   @property({ type: Number }) index = 0         // current slide index
-  @property({ type: Boolean }) hotkey = false   // sync with location hash
+  @property({ type: Boolean }) hotkey = false   // hotkey support
   @property({ type: Boolean }) hashsync = false // sync with location hash
   @property({ type: Boolean }) invert = false   // invert slides color
 
-  _pages = []   // splited markdown
-  _scale = 1    // for auto scaling canvas to fit container
+  _scale = 1        // for auto scaling canvas to fit container
+  _pages = []       // splited markdown
+  _touchStart: any  // handle for remove swipe listener
 
   static get styles () {
     return deckStyle(themeDefault, themeCodeDefault)
@@ -47,7 +48,7 @@ export class MarkdownDeck extends LitElement {
     window.addEventListener('resize', this._handleResize)
 
     if (this.hotkey) {
-      window.addEventListener('keydown', this._onKeydown)
+      window.addEventListener('keydown', this._handleKeydown)
     }
 
     if (this.markdown === undefined && this.src) {
@@ -62,8 +63,27 @@ export class MarkdownDeck extends LitElement {
 
   disconnectedCallback () {
     super.disconnectedCallback()
-    window.removeEventListener('keydown', this._onKeydown)
+    window.removeEventListener('keydown', this._handleKeydown)
     window.removeEventListener('resize', this._handleResize)
+  }
+
+  _handleTouchStart = (ev: TouchEvent) => {
+    const { clientX, clientY } = ev.changedTouches[0]
+    this._touchStart = { clientX, clientY }
+  }
+
+  _handleTouchEnd = (ev: TouchEvent) => {
+    const { clientX, clientY } = ev.changedTouches[0]
+    const deltaX = clientX - this._touchStart.clientX
+    const deltaY = clientY - this._touchStart.clientY
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX > 0) {
+        this._switchSlide('prev')
+      } else {
+        this._switchSlide('next')
+      }
+    }
   }
 
   _handleResize = () => {
@@ -94,7 +114,7 @@ export class MarkdownDeck extends LitElement {
       .catch(console.error)
   }
 
-  _onKeydown = (ev) => {
+  _handleKeydown = (ev: KeyboardEvent) => {
     // console.log(ev)
     switch (ev.code) {
       case 'ArrowRight':
@@ -165,10 +185,12 @@ export class MarkdownDeck extends LitElement {
 
     return html`
       <style>
-        ${ unsafeCSS(this._readCustomStyles()) }
         section { transform: scale(${this._scale}) }
+        ${ unsafeCSS(this._readCustomStyles()) }
       </style>
-      <div class="deck ${this.invert ? 'invert' : ''}">
+      <div class="deck ${this.invert ? 'invert' : ''}"
+        @touchstart=${this._handleTouchStart}
+        @touchend=${this._handleTouchEnd} >
         <section class="slide">${unsafeHTML(markup)}</section>
       </div>
       <slot @slotchange=${() => this.requestUpdate()}></slot>
@@ -213,6 +235,7 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
     :host {
       display: block;
       min-height: 400px;
+      overflow: hidden;
     }
     .invert {
       filter: invert(100%);
