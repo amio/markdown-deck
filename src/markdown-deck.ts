@@ -5,7 +5,9 @@ import Prism from 'prismjs'
 
 import codeTheme from './code-theme'
 import themeDefault from './theme-default'
-import styleDeck, { DEFAULT_WIDTH, DEFAULT_HEIGHT } from './style-deck'
+
+const ORIGINAL_WIDTH = 1000
+const ORIGINAL_HEIGHT = 600
 
 @customElement('markdown-deck')
 export class MarkdownDeck extends LitElement {
@@ -20,11 +22,7 @@ export class MarkdownDeck extends LitElement {
   _scale = 1
 
   static get styles () {
-    return css`
-      ${ styleDeck }
-      ${ themeDefault }
-      ${ codeTheme }
-    `
+    return deckStyle()
   }
 
   _readMarkdownScript () {
@@ -78,7 +76,7 @@ export class MarkdownDeck extends LitElement {
 
   _setScale () {
     const { width, height } = this.parentElement.getBoundingClientRect()
-    const maxScale = Math.min(width / DEFAULT_WIDTH, height / DEFAULT_HEIGHT)
+    const maxScale = Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
     this._scale = maxScale * 0.9
   }
 
@@ -156,6 +154,7 @@ export class MarkdownDeck extends LitElement {
     const markup = marked(this._pages[this.index], {
       highlight: function (code, lang = 'markup') {
         try {
+          // console.log(hyper(code))
           return Prism.highlight(code, Prism.languages[lang] || 'markup')
         } catch (e) {
           console.warn(`[highlighting]`, e)
@@ -207,4 +206,45 @@ function setLocationHash (hash: any) {
   } else {
     location.hash = hashString
   }
+}
+
+function deckStyle () {
+  return css`
+    :host {
+      display: block;
+      min-height: 400px;
+    }
+    .invert {
+      filter: invert(100%);
+    }
+    .invert img {
+      filter: invert(100%);
+    }
+    .deck {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+    }
+    .slide {
+      width: ${ORIGINAL_WIDTH}px;
+      height: ${ORIGINAL_HEIGHT}px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide > * {
+      margin: 0;
+    }
+    .slide > p {
+      text-align: justify;
+      margin-bottom: 5vh !important;
+    }
+
+    ${ themeDefault }
+    ${ codeTheme }
+  `
 }
