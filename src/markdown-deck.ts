@@ -116,10 +116,15 @@ export class MarkdownDeck extends LitElement {
 
   _handleKeydown = (ev: KeyboardEvent) => {
     // console.log(ev)
+    if (ev.metaKey) {
+      return
+    }
+
     switch (ev.code) {
       case 'ArrowRight':
       case 'ArrowDown':
       case 'Space':
+      case 'KeyJ':
         if (ev.shiftKey) {
           return this._switchSlide('prev')
         } else {
@@ -127,6 +132,7 @@ export class MarkdownDeck extends LitElement {
         }
       case 'ArrowLeft':
       case 'ArrowUp':
+      case 'KeyL':
         if (ev.shiftKey) {
           return this._switchSlide('next')
         } else {
