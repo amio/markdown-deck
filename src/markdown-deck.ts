@@ -3,7 +3,7 @@ import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-e
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import Prism from 'prismjs'
 
-import codeTheme from './code-theme'
+import themeCodeDefault from './theme-code-default'
 import themeDefault from './theme-default'
 
 const ORIGINAL_WIDTH = 1000
@@ -22,7 +22,7 @@ export class MarkdownDeck extends LitElement {
   _scale = 1
 
   static get styles () {
-    return deckStyle()
+    return deckStyle(themeDefault, themeCodeDefault)
   }
 
   _readMarkdownScript () {
@@ -208,7 +208,7 @@ function setLocationHash (hash: any) {
   }
 }
 
-function deckStyle () {
+function deckStyle (theme, codeTheme) {
   return css`
     :host {
       display: block;
@@ -244,7 +244,7 @@ function deckStyle () {
       margin-bottom: 5vh !important;
     }
 
-    ${ themeDefault }
+    ${ theme }
     ${ codeTheme }
   `
 }
