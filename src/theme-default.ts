@@ -16,17 +16,20 @@ export default css`
   h4 { font: 1.4em/1.6em var(--font-family) }
   h5 { font: 1.2em/1.6em var(--font-family) }
 
-  h1, h2, h3, h4, h5 {
+  h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
-    text-transform: uppercase;
     letter-spacing: -0.02em;
     margin-bottom: 0.5em;
+  }
+
+  h1 {
+    text-transform: uppercase;
   }
 
   h6 {
     font-weight: normal;
     font-size: 2em;
-    line-height: 1.8em;
+    line-height: 1.6em;
     letter-spacing: -0.03em;
   }
 
