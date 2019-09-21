@@ -50,7 +50,8 @@ export class MarkdownDeck extends LitElement {
         section { transform: scale(${this._scale}) }
         ${ unsafeCSS(this._readCustomStyles()) }
       </style>
-      <div class="deck ${this.invert ? 'invert' : ''}"
+      <div tabindex="999"
+        class="deck ${this.invert ? 'invert' : ''}"
         @touchstart=${this._handleTouchStart}
         @touchend=${this._handleTouchEnd} >
         <section class="slide">${unsafeHTML(markup)}</section>
@@ -159,8 +160,8 @@ export class MarkdownDeck extends LitElement {
   }
 
   _handleKeydown = (ev: KeyboardEvent) => {
-    // console.log(ev)
-    if (ev.metaKey) {
+    // console.log(ev.code)
+    if (ev.target !== this || ev.metaKey) {
       return
     }
 
