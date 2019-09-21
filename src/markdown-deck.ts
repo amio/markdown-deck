@@ -26,19 +26,34 @@ export class MarkdownDeck extends LitElement {
     return deckStyle(themeDefault, themeCodeDefault)
   }
 
-  _readMarkdownScript () {
-    const scriptTag = this.querySelector('script[type="text/markdown"]')
-    return scriptTag ? trimIndent(scriptTag.textContent) : ''
-  }
+  render () {
+    if (this._pages.length === 0) {
+      return html``
+    }
 
-  _readCustomStyles () {
-    const styleTag = this.querySelector('style')
-    return styleTag ? styleTag.textContent : ''
-  }
+    const markup = marked(this._pages[this.index], {
+      highlight: function (code: string, lang: string) {
+        try {
+          return Prism.highlight(code, Prism.languages[lang || 'markup'])
+        } catch (e) {
+          console.warn(`[highlight error] lang:${lang} #${this.index}`)
+          return code
+        }
+      }
+    })
 
-  _updatePages () {
-    const markdown = this.markdown || this._readMarkdownScript()
-    this._pages = splitMarkdownToPages(markdown)
+    return html`
+      <style>
+        section { transform: scale(${this._scale}) }
+        ${ unsafeCSS(this._readCustomStyles()) }
+      </style>
+      <div class="deck ${this.invert ? 'invert' : ''}"
+        @touchstart=${this._handleTouchStart}
+        @touchend=${this._handleTouchEnd} >
+        <section class="slide">${unsafeHTML(markup)}</section>
+      </div>
+      <slot @slotchange=${() => this.requestUpdate()}></slot>
+    `;
   }
 
   connectedCallback () {
@@ -65,6 +80,21 @@ export class MarkdownDeck extends LitElement {
     super.disconnectedCallback()
     window.removeEventListener('keydown', this._handleKeydown)
     window.removeEventListener('resize', this._handleResize)
+  }
+
+  _readMarkdownScript () {
+    const scriptTag = this.querySelector('script[type="text/markdown"]')
+    return scriptTag ? trimIndent(scriptTag.textContent) : ''
+  }
+
+  _readCustomStyles () {
+    const styleTag = this.querySelector('style')
+    return styleTag ? styleTag.textContent : ''
+  }
+
+  _updatePages () {
+    const markdown = this.markdown || this._readMarkdownScript()
+    this._pages = splitMarkdownToPages(markdown)
   }
 
   _handleTouchStart = (ev: TouchEvent) => {
@@ -181,36 +211,6 @@ export class MarkdownDeck extends LitElement {
     if (this.hashsync) {
       setLocationHash(this.index)
     }
-  }
-
-  render () {
-    if (this._pages.length === 0) {
-      return html``
-    }
-
-    const markup = marked(this._pages[this.index], {
-      highlight: function (code: string, lang: string) {
-        try {
-          return Prism.highlight(code, Prism.languages[lang || 'markup'])
-        } catch (e) {
-          console.warn(`[highlight error] lang:${lang} #${this.index}`)
-          return code
-        }
-      }
-    })
-
-    return html`
-      <style>
-        section { transform: scale(${this._scale}) }
-        ${ unsafeCSS(this._readCustomStyles()) }
-      </style>
-      <div class="deck ${this.invert ? 'invert' : ''}"
-        @touchstart=${this._handleTouchStart}
-        @touchend=${this._handleTouchEnd} >
-        <section class="slide">${unsafeHTML(markup)}</section>
-      </div>
-      <slot @slotchange=${() => this.requestUpdate()}></slot>
-    `;
   }
 }
 
