@@ -149,11 +149,11 @@ export class MarkdownDeck extends LitElement {
     }
 
     const markup = marked(this._pages[this.index], {
-      highlight: function (code, lang = 'markup') {
+      highlight: function (code: string, lang: string) {
         try {
-          return Prism.highlight(code, Prism.languages[lang] || 'markup')
+          return Prism.highlight(code, Prism.languages[lang || 'markup'])
         } catch (e) {
-          console.warn(`[highlighting]`, e)
+          console.warn(`[highlight error] lang:${lang} #${this.index}`)
           return code
         }
       }
@@ -232,14 +232,6 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
       align-items: center;
       justify-content: center;
     }
-    .slide > * {
-      margin: 0;
-    }
-    .slide > p {
-      text-align: justify;
-      margin-bottom: 5vh !important;
-    }
-
     ${ theme }
     ${ codeTheme }
   `

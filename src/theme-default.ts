@@ -6,6 +6,10 @@ export default css`
     font: 36px/1.6em var(--font-family);
   }
 
+  .slide > * {
+    margin-top: 0;
+  }
+
   h1 { font: 3.6em/1.6em var(--font-family) }
   h2 { font: 2.4em/1.6em var(--font-family) }
   h3 { font: 1.8em/1.6em var(--font-family) }
@@ -16,6 +20,7 @@ export default css`
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: -0.02em;
+    margin-bottom: 0.5em;
   }
 
   h6 {
@@ -27,6 +32,10 @@ export default css`
 
   li {
     text-align: left;
+  }
+
+  p {
+    text-align: justify;
   }
 
   code {

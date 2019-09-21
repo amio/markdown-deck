@@ -89,7 +89,7 @@ const svgString = badgen({
 
 `https://example.com/your-api`
 
-```
+```js
 {
   subject: 'hello',
   status: 'world',
