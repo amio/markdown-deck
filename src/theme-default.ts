@@ -32,15 +32,19 @@ export default css`
   code {
     display: inline-block;
     background: #E7E7E7;
-    padding: 0 0.2em;
-    margin: 0 0.2em;
+    padding: 0 0.25em;
+    margin: 0 0.1em;
     border-radius: 0.3em;
     line-height: 1.4em;
   }
 
-  pre code {
-    padding: 0.8em 1.2em;
+  pre {
+    margin: 0 0.2em;
     font-size: 24px;
+  }
+
+  pre code {
+    padding: 0.7em 1.2em;
   }
 
   a {

@@ -1,6 +1,9 @@
 import marked from 'marked'
 import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
+import Prism from 'prismjs'
+
+import codeTheme from './code-theme'
 import themeDefault from './theme-default'
 import styleDeck, { DEFAULT_WIDTH, DEFAULT_HEIGHT } from './style-deck'
 
@@ -20,6 +23,7 @@ export class MarkdownDeck extends LitElement {
     return css`
       ${ styleDeck }
       ${ themeDefault }
+      ${ codeTheme }
     `
   }
 
@@ -75,7 +79,6 @@ export class MarkdownDeck extends LitElement {
   _setScale () {
     const { width, height } = this.parentElement.getBoundingClientRect()
     const maxScale = Math.min(width / DEFAULT_WIDTH, height / DEFAULT_HEIGHT)
-    console.log(width, DEFAULT_WIDTH, height, DEFAULT_HEIGHT)
     this._scale = maxScale * 0.9
   }
 
@@ -150,9 +153,16 @@ export class MarkdownDeck extends LitElement {
       return html``
     }
 
-    const markup = marked(this._pages[this.index])
-
-    console.log(this.index, this._scale)
+    const markup = marked(this._pages[this.index], {
+      highlight: function (code, lang = 'markup') {
+        try {
+          return Prism.highlight(code, Prism.languages[lang] || 'markup')
+        } catch (e) {
+          console.warn(`[highlighting]`, e)
+          return code
+        }
+      }
+    })
 
     return html`
       <style>

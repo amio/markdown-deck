@@ -15,7 +15,8 @@
     "@webcomponents/webcomponentsjs": "2.2.10",
     "lit-element": "2.2.1",
     "lit-html": "^1.1.2",
-    "marked": "^0.7.0"
+    "marked": "^0.7.0",
+    "prismjs": "^1.17.1"
   },
   "devDependencies": {
     "bili": "^4.8.1",
