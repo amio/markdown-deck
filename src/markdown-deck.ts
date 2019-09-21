@@ -44,6 +44,11 @@ export class MarkdownDeck extends LitElement {
     super.connectedCallback()
 
     this._setScale()
+    window.addEventListener('resize', this._handleResize)
+
+    if (this.hotkey) {
+      window.addEventListener('keydown', this._onKeydown)
+    }
 
     if (this.markdown === undefined && this.src) {
       this._loadMarkdownFile(this.src)
@@ -53,25 +58,17 @@ export class MarkdownDeck extends LitElement {
       this.index = parseInt(location.hash.replace('#', ''), 10) || 0
       setLocationHash(this.index)
     }
-
-    if (this.hotkey) {
-      this._bindShortcuts()
-    }
-
-    this._updatePages()
   }
 
   disconnectedCallback () {
     super.disconnectedCallback()
-    this._unbindShortcuts()
-  }
-
-  _bindShortcuts () {
-    window.addEventListener('keydown', this._onKeydown)
-  }
-
-  _unbindShortcuts () {
     window.removeEventListener('keydown', this._onKeydown)
+    window.removeEventListener('resize', this._handleResize)
+  }
+
+  _handleResize = () => {
+    this._setScale()
+    this.requestUpdate()
   }
 
   _setScale () {
