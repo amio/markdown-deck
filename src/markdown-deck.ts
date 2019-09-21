@@ -1,5 +1,5 @@
 import marked from 'marked'
-import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element'
+import { LitElement, html, css, property, customElement, unsafeCSS, CSSResult } from 'lit-element'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import Prism from 'prismjs'
 
@@ -18,8 +18,8 @@ export class MarkdownDeck extends LitElement {
   @property({ type: Boolean }) hashsync = false // sync with location hash
   @property({ type: Boolean }) invert = false   // invert slides color
 
-  _pages = []        // splited markdown
-  _scale = 1
+  _pages = []   // splited markdown
+  _scale = 1    // for auto scaling canvas to fit container
 
   static get styles () {
     return deckStyle(themeDefault, themeCodeDefault)
@@ -146,7 +146,7 @@ export class MarkdownDeck extends LitElement {
     }
   }
 
-  render() {
+  render () {
     if (this._pages.length === 0) {
       return html``
     }
@@ -154,7 +154,6 @@ export class MarkdownDeck extends LitElement {
     const markup = marked(this._pages[this.index], {
       highlight: function (code, lang = 'markup') {
         try {
-          // console.log(hyper(code))
           return Prism.highlight(code, Prism.languages[lang] || 'markup')
         } catch (e) {
           console.warn(`[highlighting]`, e)
@@ -208,7 +207,7 @@ function setLocationHash (hash: any) {
   }
 }
 
-function deckStyle (theme, codeTheme) {
+function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
   return css`
     :host {
       display: block;
