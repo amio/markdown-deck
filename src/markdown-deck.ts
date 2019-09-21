@@ -82,6 +82,17 @@ export class MarkdownDeck extends LitElement {
     window.removeEventListener('resize', this._handleResize)
   }
 
+  shouldUpdate (changedProps) {
+    if (changedProps.has('markdown')) {
+      // update computed property
+      this._updatePages()
+      return true
+    }
+
+    const watched = ['markdown', 'index']
+    return watched.some(attr => changedProps.has(attr))
+  }
+
   _readMarkdownScript () {
     const scriptTag = this.querySelector('script[type="text/markdown"]')
     return scriptTag ? trimIndent(scriptTag.textContent) : ''
