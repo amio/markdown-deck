@@ -14,8 +14,8 @@ export class MarkdownDeck extends LitElement {
   @property({ type: String }) markdown: string  // the markdown to parse
   @property({ type: String }) src: string       // the markdown file url to load
   @property({ type: Number }) index = 0         // current slide index
-  @property({ type: Boolean }) hotkey = false   // hotkey support
   @property({ type: Boolean }) hashsync = false // sync with location hash
+  @property({ type: Boolean }) hotkey = false   // hotkey support
   @property({ type: Boolean }) invert = false   // invert slides color
 
   _scale = 1        // for auto scaling canvas to fit container
@@ -121,9 +121,8 @@ export class MarkdownDeck extends LitElement {
     }
 
     switch (ev.code) {
-      case 'ArrowRight':
-      case 'ArrowDown':
       case 'Space':
+      case 'ArrowRight':
       case 'KeyJ':
         if (ev.shiftKey) {
           return this._switchSlide('prev')
@@ -131,13 +130,16 @@ export class MarkdownDeck extends LitElement {
           return this._switchSlide('next')
         }
       case 'ArrowLeft':
-      case 'ArrowUp':
       case 'KeyL':
         if (ev.shiftKey) {
           return this._switchSlide('next')
         } else {
           return this._switchSlide('prev')
         }
+      case 'ArrowUp':
+        return this._switchSlide('first')
+      case 'ArrowDown':
+        return this._switchSlide('last')
       case 'KeyI':
       case 'KeyD':
         return this.invert = !this.invert
@@ -146,12 +148,20 @@ export class MarkdownDeck extends LitElement {
 
   _switchSlide = (to: 'next' | 'prev' | 'first' | 'last' | number) => {
     let targetIndex: number = this.index
+
     switch (to) {
       case 'next':
         targetIndex = this.index + 1
         break;
       case 'prev':
         targetIndex = this.index - 1
+        break;
+      case 'first':
+        targetIndex = 0
+        break;
+      case 'last':
+        targetIndex = this._pages.length - 1
+        break;
       default:
         if (typeof to === 'number') {
           targetIndex = to
