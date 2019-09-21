@@ -161,21 +161,21 @@ export class MarkdownDeck extends LitElement {
 
   _handleKeydown = (ev: KeyboardEvent) => {
     // console.log(ev.code)
-    if (ev.target !== this || ev.metaKey) {
+    if (ev.target !== this && ev.target !== document.body || ev.metaKey) {
       return
     }
 
     switch (ev.code) {
       case 'Space':
       case 'ArrowRight':
-      case 'KeyJ':
+      case 'KeyL':
         if (ev.shiftKey) {
           return this._switchSlide('prev')
         } else {
           return this._switchSlide('next')
         }
       case 'ArrowLeft':
-      case 'KeyL':
+      case 'KeyJ':
         if (ev.shiftKey) {
           return this._switchSlide('next')
         } else {
