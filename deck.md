@@ -124,3 +124,9 @@ docker run -p 3000:3000 amio/badgen
 ## Thanks!
 
 https://badgen-5min.now.sh
+
+---
+
+## Try the Editor
+
+https://markdown-deck.now.sh/editor.html
