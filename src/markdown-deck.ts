@@ -93,7 +93,7 @@ export class MarkdownDeck extends LitElement {
       return true
     }
 
-    const watched = ['markdown', 'index', '_scale', '_pages']
+    const watched = ['markdown', 'index', 'invert', '_scale', '_pages']
     return watched.some(attr => changedProps.has(attr))
   }
 
