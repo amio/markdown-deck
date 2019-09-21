@@ -10,9 +10,9 @@ export default css`
     margin-top: 0;
   }
 
-  h1 { font: 3.6em/1.6em var(--font-family) }
-  h2 { font: 2.4em/1.6em var(--font-family) }
-  h3 { font: 1.8em/1.6em var(--font-family) }
+  h1 { font: 3.6em/1.4em var(--font-family) }
+  h2 { font: 2.4em/1.4em var(--font-family) }
+  h3 { font: 1.8em/1.4em var(--font-family) }
   h4 { font: 1.4em/1.6em var(--font-family) }
   h5 { font: 1.2em/1.6em var(--font-family) }
 
