@@ -73,7 +73,11 @@ export class MarkdownDeck extends LitElement {
 
   _setScale () {
     const { width, height } = this.parentElement.getBoundingClientRect()
-    const maxScale = Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
+
+    const maxScale = width > height
+      ? Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
+      : Math.min(width / ORIGINAL_HEIGHT, height / ORIGINAL_WIDTH)
+
     this._scale = maxScale * 0.9
   }
 

@@ -34,10 +34,6 @@ export default css`
     text-align: left;
   }
 
-  p {
-    text-align: justify;
-  }
-
   code {
     display: inline-block;
     background: #E7E7E7;

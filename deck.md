@@ -81,7 +81,7 @@ const svgString = badgen({
 
 ---
 
-## runkit / https
+## /https
 
 > Your __data__, My __badge__
 
