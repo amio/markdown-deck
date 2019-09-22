@@ -36,7 +36,7 @@
       editor.addEventListener('click', syncMarkdown)
 
       // Init
-      fetch('deck.md')
+      fetch('intro.md')
         .then(resp => resp.status === 200 && resp.text())
         .then(text => editor.value = text)
         .then(() => editor.selectionStart = 0)
