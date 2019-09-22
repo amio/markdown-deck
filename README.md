@@ -1,11 +1,13 @@
-# markdown-deck
+# &lt;markdown-deck />
 
-The web component for presenters.
+A web component for presenters.
 
 - Standard web component
 - Keyboard shortcuts & touch gestures
 - Support inline or external markdown
 - Customizable with web standard
+
+> Try the editor  https://markdown-deck.now.sh/editor.html
 
 ## Usage
 
@@ -51,8 +53,9 @@ The web component for presenters.
 
 ### Hotkeys
 
-- __prev / next__: <kbd>⯇</kbd> / <kbd>⯈</kbd> or <kbd>J</kbd> / <kbd>L</kbd>
-- __first / last__: <kbd>⯅</kbd> / <kbd>⯆</kbd>
+- __next__: <kbd>Space</kbd>
+- __prev / next__: <kbd>⇦</kbd> / <kbd>⇨</kbd> or <kbd>J</kbd> / <kbd>L</kbd>
+- __first / last__: <kbd>⇧</kbd> / <kbd>⇩</kbd>
 - __invert color (dark theme)__: <kbd>I</kbd> or <kbd>D</kbd>
 
 ### Customize
