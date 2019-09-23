@@ -28,6 +28,8 @@
 
         preview.index = pageIndex
         preview.markdown = editor.value
+
+        sessionStorage.setItem('markdown', editor.value)
       }
 
       editor.addEventListener('input', syncMarkdown)
@@ -35,12 +37,23 @@
       editor.addEventListener('keyup', syncMarkdown)
       editor.addEventListener('click', syncMarkdown)
 
-      // Init
-      fetch('intro.md')
+      function init () {
+        const stored = sessionStorage.getItem('markdown')
+
+        if (stored) {
+          editor.value = stored
+          preview.markdown = stored
+          return
+        }
+
+        fetch('intro.md')
         .then(resp => resp.status === 200 && resp.text())
         .then(text => editor.value = text)
         .then(() => editor.selectionStart = 0)
         .then(syncMarkdown)
+      }
+
+      init()
     </script>
   </body>
 
