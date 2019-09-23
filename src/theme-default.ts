@@ -1,8 +1,12 @@
 import { css } from 'lit-element'
 
 export default css`
+  @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,400i,900&display=swap");
+  @import url("https://fonts.googleapis.com/css?family=Fira+Code:400,400i,700&display=swap");
+
   .slide {
-    --font-family: "Source Sans Pro", sans-serif;
+    --font-family: "Roboto", sans-serif;
+    --code-font-family: "Fira Code", monospace;
     font: 36px/1.6em var(--font-family);
   }
 
@@ -18,7 +22,7 @@ export default css`
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     margin-bottom: 0.5em;
   }
 
@@ -30,11 +34,15 @@ export default css`
     font-weight: normal;
     font-size: 2em;
     line-height: 1.6em;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
   }
 
   li {
     text-align: left;
+  }
+
+  i {
+    color: #333;
   }
 
   code {
@@ -44,6 +52,7 @@ export default css`
     margin: 0 0.1em;
     border-radius: 0.3em;
     line-height: 1.4em;
+    font-family: var(--code-font-family) !important;
   }
 
   pre {
@@ -69,4 +78,18 @@ export default css`
     height: 100%;
     border: none;
   }
+
+  kbd {
+    display: inline-block;
+    min-width: 42px;
+    text-align: center;
+    padding: 2px 12px 6px 12px;
+    margin: 0 12px;
+    color: #444d56;
+    background-color: #fafbfc;
+    border: 1px solid #c6cbd1;
+    border-bottom-color: #959da5;
+    box-shadow: inset 0 -5px 0 #959da5;
+    border-radius: 15px;
+}
 `
