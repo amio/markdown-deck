@@ -31,7 +31,7 @@ A web component for presenters.
     </markdown-deck>
     ```
 
-    or use `markdown` attribute on `<markdown-deck />`:
+    or set `markdown` attribute on `<markdown-deck />`:
 
     ```html
     <markdown-deck markdown="# Awesome Presentation" />
