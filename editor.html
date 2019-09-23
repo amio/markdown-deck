@@ -9,14 +9,20 @@
     <style>
       html, body { height: 100%; margin: 0 }
       body { display: grid; grid-template-columns: 1fr 2fr }
-      textarea { border: 15px solid #FAFAFA; background-color: #FAFAFA }
+      textarea { border: none; margin: 1px; padding: 1em; background-color: #FAFAFA }
       textarea { font: 16px/1.6em monospace }
     </style>
   </head>
 
   <body>
     <textarea id="editor" focus></textarea>
-    <markdown-deck id="preview" hotkey></markdown-deck>
+    <markdown-deck id="preview" hotkey>
+      <style>
+        @import url("https://fonts.googleapis.com/css?family=Roboto+Slab:400,400i");
+        .slide { font-family: "Roboto Slab", serif }
+        strong { color: #63F }
+      </style>
+    </markdown-deck>
     <script type="module">
       const editor = document.querySelector('#editor')
       const preview = document.querySelector('#preview')

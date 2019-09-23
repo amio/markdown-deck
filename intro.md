@@ -1,4 +1,4 @@
-## `<markdown-deck />`
+# `<markdown-deck />`
 
 *press <kbd>space</kbd> to start*
 
@@ -63,7 +63,7 @@ swipe **left** and **right** 👋
 ```
 <markdown-deck markdown="# Title">
   <style>
-    @import url("https://fonts.googleapis.com/css?family=Roboto+Slab:400,400i")
+    @import url("https://fonts.googleapis.com/css?family=Roboto+Slab:400,400i");
     .slide { font-family: "Roboto Slab", serif }
   </style>
 </markdown-deck>
