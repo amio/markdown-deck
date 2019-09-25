@@ -265,8 +265,9 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
   return css`
     :host {
       display: block;
-      min-height: 400px;
       overflow: hidden;
+      min-height: 400px;
+      height: 100%;
     }
     .invert {
       filter: invert(100%);
