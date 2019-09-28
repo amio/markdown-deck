@@ -1,7 +1,8 @@
 import marked from 'marked'
-import { LitElement, html, css, property, customElement, unsafeCSS, CSSResult } from 'lit-element'
+import { LitElement, html, css, property, customElement, unsafeCSS, CSSResult, TemplateResult } from 'lit-element'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import { classMap } from 'lit-html/directives/class-map'
+import { repeat } from 'lit-html/directives/repeat'
 import Prism from 'prismjs'
 
 import themeCodeDefault from './theme-code-default'
@@ -13,12 +14,16 @@ const ORIGINAL_HEIGHT = 400
 @customElement('markdown-deck')
 export class MarkdownDeck extends LitElement {
   @property({ type: String }) markdown: string      // the markdown to parse
-  @property({ type: String }) src: string           // the markdown file url to load
   @property({ type: Number }) index = 0             // current slide index
+  @property({ type: String }) src: string           // the markdown file url to load
+
+  // feature switch
+  @property({ type: Boolean }) hotkey = false       // enable hotkey
   @property({ type: Boolean }) hashsync = false     // sync with location hash
+
+  // view mode switch
   @property({ type: Boolean }) printing = false     // printing mode [TODO]
   @property({ type: Boolean }) editing = false      // reveal editor
-  @property({ type: Boolean }) hotkey = false       // enable hotkey
   @property({ type: Boolean }) invert = false       // invert color
 
   // watched private properties
@@ -39,20 +44,14 @@ export class MarkdownDeck extends LitElement {
 
     this._setScale()
 
-    const markup = marked(this._pages[this.index], {
-      highlight: function (code: string, lang: string) {
-        try {
-          return Prism.highlight(code, Prism.languages[lang || 'markup'])
-        } catch (e) {
-          console.warn(`[highlight error] lang:${lang} index:${this.index}`)
-          return code
-        }
-      }
-    })
+    const slides = this.printing
+      ? html`<div>${repeat(this._pages, renderSlide)}</div>`
+      : renderSlide(this._pages[this.index])
 
     const deckClassNames = {
       invert: this.invert,
-      editing: this.editing
+      editing: this.editing,
+      printing: this.printing
     }
 
     return html`
@@ -65,10 +64,10 @@ export class MarkdownDeck extends LitElement {
         @touchstart=${this._handleTouchStart}
         @touchend=${this._handleTouchEnd} >
         ${this.editing ? this._renderEditor() : null}
-
-        <div id="slide-wrap">
-          <section class="slide">${unsafeHTML(markup)}</section>
-        </div>
+        ${this.printing
+          ? renderSlides(this._pages)
+          : renderSlide(this._pages[this.index])
+        }
       </div>
       <slot @slotchange=${() => this.requestUpdate()}></slot>
     `;
@@ -116,7 +115,7 @@ export class MarkdownDeck extends LitElement {
       return true
     }
 
-    const watched = ['markdown', 'index', 'invert', 'editing', '_scale', '_pages']
+    const watched = ['markdown', 'index', 'invert', 'editing', 'printing', '_scale', '_pages']
     return watched.some(attr => changedProps.has(attr))
   }
 
@@ -228,6 +227,10 @@ export class MarkdownDeck extends LitElement {
         return this.invert = !this.invert
       case 'Escape':
         return this.editing = !this.editing
+      case 'KeyP':
+        this.editing = false
+        this.printing = !this.printing
+        return this.requestUpdate()
     }
   }
 
@@ -269,6 +272,30 @@ export class MarkdownDeck extends LitElement {
   }
 }
 
+
+function renderSlide (md: string): TemplateResult {
+  const markup = marked(md, {
+    highlight: function (code: string, lang: string) {
+      try {
+        return Prism.highlight(code, Prism.languages[lang || 'markup'])
+      } catch (e) {
+        console.warn(`[highlight error] lang:${lang} index:${this.index}`)
+        return code
+      }
+    }
+  })
+
+  return html`
+    <div class="slide-wrap">
+      <section class="slide">${unsafeHTML(markup)}</section>
+    </div>
+  `
+}
+
+function renderSlides (mds: Array<string>): TemplateResult {
+  return html`<div class="print-wrap">${repeat(mds, renderSlide)}</div>`
+}
+
 function trimIndent (text: string): string {
   const lines = text.split('\n')
 
@@ -305,7 +332,6 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
   return css`
     :host {
       display: block;
-      overflow: hidden;
       min-height: ${ORIGINAL_HEIGHT}px;
       height: 100%;
     }
@@ -324,8 +350,15 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
     #deck.editing {
       grid-template-columns: 1fr 2fr;
     }
-    #slide-wrap {
-      place-self: center;
+    #deck.printing {
+      display: block;
+    }
+    .print-wrap {
+      height: 100%;
+    }
+    .slide-wrap {
+      height: 100%;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;

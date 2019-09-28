@@ -46,7 +46,15 @@ swipe **left** and **right**
 
 ## THE EDITOR
 
-★ <kbd>D</kbd> ★
+★ <kbd>ESC</kbd> ★
+
+---
+
+## PRINT VIEW
+
+★ <kbd>P</kbd> ★
+
+then `cmd` + `p` (save as pdf)
 
 ---
 
@@ -79,10 +87,13 @@ swipe **left** and **right**
 
 ---
 
-- `markdown="# Title"` The markdown string
-- `index="0"` Control slide index
+*Attributes*
+
+- `markdown="# Title"` The raw markdown
+- `index="0"` Slide index
 - `hashsync` Sync location hash with index
 - `hotkey` Enable hotkeys
+- `editor` Open editor
 
 ---
 
