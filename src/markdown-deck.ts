@@ -1,6 +1,7 @@
 import marked from 'marked'
 import { LitElement, html, css, property, customElement, unsafeCSS, CSSResult } from 'lit-element'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
+import { classMap } from 'lit-html/directives/class-map'
 import Prism from 'prismjs'
 
 import themeCodeDefault from './theme-code-default'
@@ -51,7 +52,7 @@ export class MarkdownDeck extends LitElement {
         ${ unsafeCSS(this._readCustomStyles()) }
       </style>
       <div tabindex="999"
-        class="deck ${this.invert ? 'invert' : ''}"
+        class="${classMap({ deck: true, invert: this.invert })}"
         @touchstart=${this._handleTouchStart}
         @touchend=${this._handleTouchEnd} >
         <section class="slide">${unsafeHTML(markup)}</section>
