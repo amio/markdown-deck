@@ -3,7 +3,7 @@
   "version": "0.0.8",
   "description": "A web component for presenters",
   "repository": "amio/markdown-deck",
-  "main": "dist/index.min.js",
+  "main": "dist/markdown-deck.min.js",
   "scripts": {
     "start": "bili -w --format iife & es-dev-server -a index.html -o",
     "build": "rm -rf dist && bili --format iife --minify",
