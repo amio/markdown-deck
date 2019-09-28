@@ -7,18 +7,18 @@ export default css`
   .slide {
     --font-family: "Roboto", sans-serif;
     --code-font-family: "Fira Code", monospace;
-    font: 36px/1.6em var(--font-family);
+    font: 20px/1.6em var(--font-family);
   }
 
   .slide > * {
     margin-top: 0;
   }
 
-  h1 { font: 3.6em/1.4em var(--font-family) }
-  h2 { font: 2.4em/1.4em var(--font-family) }
-  h3 { font: 1.8em/1.4em var(--font-family) }
-  h4 { font: 1.4em/1.6em var(--font-family) }
-  h5 { font: 1.2em/1.6em var(--font-family) }
+  h1 { font: 3.2em/1.4em var(--font-family) }
+  h2 { font: 2.1em/1.4em var(--font-family) }
+  h3 { font: 1.6em/1.4em var(--font-family) }
+  h4 { font: 1.2em/1.6em var(--font-family) }
+  h5 { font: 1.0em/1.6em var(--font-family) }
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
@@ -57,7 +57,7 @@ export default css`
 
   pre {
     margin: 0 0.2em;
-    font-size: 24px;
+    font-size: 0.6em;
   }
 
   pre code {
@@ -81,7 +81,7 @@ export default css`
 
   kbd {
     display: inline-block;
-    min-width: 42px;
+    min-width: 20px;
     text-align: center;
     padding: 2px 12px 6px 12px;
     margin: 0 12px;
@@ -90,6 +90,6 @@ export default css`
     border: 1px solid #c6cbd1;
     border-bottom-color: #959da5;
     box-shadow: inset 0 -5px 0 #959da5;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 `

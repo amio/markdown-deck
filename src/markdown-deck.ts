@@ -7,8 +7,8 @@ import Prism from 'prismjs'
 import themeCodeDefault from './theme-code-default'
 import themeDefault from './theme-default'
 
-const ORIGINAL_WIDTH = 1000
-const ORIGINAL_HEIGHT = 600
+const ORIGINAL_WIDTH = 640
+const ORIGINAL_HEIGHT = 400
 
 @customElement('markdown-deck')
 export class MarkdownDeck extends LitElement {
@@ -16,8 +16,10 @@ export class MarkdownDeck extends LitElement {
   @property({ type: String }) src: string           // the markdown file url to load
   @property({ type: Number }) index = 0             // current slide index
   @property({ type: Boolean }) hashsync = false     // sync with location hash
-  @property({ type: Boolean }) hotkey = false       // hotkey support
-  @property({ type: Boolean }) invert = false       // invert slides color
+  @property({ type: Boolean }) printing = false     // printing mode [TODO]
+  @property({ type: Boolean }) editing = false      // reveal editor
+  @property({ type: Boolean }) hotkey = false       // enable hotkey
+  @property({ type: Boolean }) invert = false       // invert color
 
   // watched private properties
   @property({ type: Number }) _scale = 1            // scale canvas to fit container
@@ -35,36 +37,56 @@ export class MarkdownDeck extends LitElement {
       return html``
     }
 
+    this._setScale()
+
     const markup = marked(this._pages[this.index], {
       highlight: function (code: string, lang: string) {
         try {
           return Prism.highlight(code, Prism.languages[lang || 'markup'])
         } catch (e) {
-          console.warn(`[highlight error] lang:${lang} #${this.index}`)
+          console.warn(`[highlight error] lang:${lang} index:${this.index}`)
           return code
         }
       }
     })
+
+    const deckClassNames = {
+      invert: this.invert,
+      editing: this.editing
+    }
 
     return html`
       <style>
         section { transform: scale(${this._scale}) }
         ${ unsafeCSS(this._readCustomStyles()) }
       </style>
-      <div tabindex="999"
-        class="${classMap({ deck: true, invert: this.invert })}"
+      <div id="deck" tabindex="1000"
+        class="${classMap(deckClassNames)}"
         @touchstart=${this._handleTouchStart}
         @touchend=${this._handleTouchEnd} >
-        <section class="slide">${unsafeHTML(markup)}</section>
+        ${this.editing ? this._renderEditor() : null}
+
+        <div id="slide-wrap">
+          <section class="slide">${unsafeHTML(markup)}</section>
+        </div>
       </div>
       <slot @slotchange=${() => this.requestUpdate()}></slot>
     `;
   }
 
+  _renderEditor () {
+    return html`
+      <textarea class="editor"
+        @keydown=${this._handleEditing}
+        @input=${this._handleEditing}
+        @click=${this._handleEditing}
+      >${this.markdown}</textarea>
+    `
+  }
+
   connectedCallback () {
     super.connectedCallback()
 
-    this._setScale()
     window.addEventListener('resize', this._handleResize)
 
     if (this.hotkey) {
@@ -94,7 +116,7 @@ export class MarkdownDeck extends LitElement {
       return true
     }
 
-    const watched = ['markdown', 'index', 'invert', '_scale', '_pages']
+    const watched = ['markdown', 'index', 'invert', 'editing', '_scale', '_pages']
     return watched.some(attr => changedProps.has(attr))
   }
 
@@ -111,6 +133,20 @@ export class MarkdownDeck extends LitElement {
   _updatePages () {
     const markdown = this.markdown || this._readMarkdownScript()
     this._pages = splitMarkdownToPages(markdown)
+  }
+
+  _handleEditing = (ev: KeyboardEvent | InputEvent) => {
+    if (ev instanceof KeyboardEvent && ev.code !== 'Escape') {
+      ev.stopPropagation()
+    }
+
+    // sync deck with editor
+    const editor: HTMLTextAreaElement = this.shadowRoot.querySelector('.editor')
+    const textBeforeCaret = editor.value.substr(0, editor.selectionStart)
+    const pageIndex = textBeforeCaret.split('\n---\n').length - 1
+    this.markdown = editor.value
+    this.index = pageIndex
+    this._updatePages()
   }
 
   _handleTouchStart = (ev: TouchEvent) => {
@@ -138,7 +174,8 @@ export class MarkdownDeck extends LitElement {
   }
 
   _setScale () {
-    const { width, height } = this.getBoundingClientRect()
+    const { width: deckWidth, height } = this.getBoundingClientRect()
+    const width = this.editing ? deckWidth * 0.66 : deckWidth
 
     const maxScale = width > height
       ? Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
@@ -189,6 +226,8 @@ export class MarkdownDeck extends LitElement {
       case 'KeyI':
       case 'KeyD':
         return this.invert = !this.invert
+      case 'Escape':
+        return this.editing = !this.editing
     }
   }
 
@@ -267,30 +306,53 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
     :host {
       display: block;
       overflow: hidden;
-      min-height: 400px;
+      min-height: ${ORIGINAL_HEIGHT}px;
       height: 100%;
     }
-    .invert {
-      filter: invert(100%);
-    }
-    .invert img {
-      filter: invert(100%);
-    }
-    .deck {
+    #deck {
       height: 100%;
       width: 100%;
+      display: grid;
+      background-color: white;
+    }
+    #deck.invert {
+      filter: invert(100%);
+    }
+    #deck.invert img {
+      filter: invert(100%);
+    }
+    #deck.editing {
+      grid-template-columns: 1fr 2fr;
+    }
+    #slide-wrap {
+      place-self: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: white;
     }
     .slide {
       width: ${ORIGINAL_WIDTH}px;
       height: ${ORIGINAL_HEIGHT}px;
+      place-self: center;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+    }
+    .editor {
+      height: 100%;
+      width: 100%;
+      color: #666;
+      padding: 1em;
+      border: 0px solid transparent;
+      box-sizing: border-box;
+      background-color: #F7F7F7;
+      font: 16px/1.6em monospace;
+    }
+    .editor:focus {
+      color: #111;
+      outline: none;
+      box-shadow: inset 0 0 100px #EEE;
     }
     ${ theme }
     ${ codeTheme }
