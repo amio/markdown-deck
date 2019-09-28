@@ -44,6 +44,12 @@ swipe **left** and **right**
 
 ---
 
+## THE EDITOR
+
+★ <kbd>D</kbd> ★
+
+---
+
 # Show me the code
 
 ---
@@ -62,9 +68,21 @@ swipe **left** and **right**
 *Attributes*
 
 ```html
-<markdown-deck markdown="# Title" index="0" hash-sync hotkey>
-</markdown-deck>
+<markdown-deck
+  markdown="# Title" 
+  index="0"
+  hashsync
+  hotkey
+  editor
+></markdown-deck>
 ```
+
+---
+
+- `markdown="# Title"` The markdown string
+- `index="0"` Control slide index
+- `hashsync` Sync location hash with index
+- `hotkey` Enable hotkeys
 
 ---
 
@@ -82,12 +100,6 @@ swipe **left** and **right**
 
 ---
 
-# The Editor
-
-https://markdown-deck.now.sh/editor.html
-
----
-
 # The CLI
 
 *to be announced*
@@ -97,5 +109,5 @@ https://markdown-deck.now.sh/editor.html
 # THANKS
 
 <a href="https://github.com/amio/markdown-deck">
-  <img src="https://badgen.net/badge/github/amio%2Fmarkdown-deck?icon&label" height="42px" />
+  <img src="https://badgen.net/badge/github/amio%2Fmarkdown-deck?icon&label" height="33px" />
 </a>
