@@ -2,12 +2,10 @@
 
 A web component for presenters.
 
-- Standard web component
-- Keyboard shortcuts & touch gestures
-- Support inline or external markdown
 - Customizable with web standard
-
-> Try the editor  https://markdown-deck.now.sh/editor.html
+- Keyboard shortcuts & touch gestures
+- Dark mode for all theme
+- Inline editor
 
 ## Usage
 
@@ -50,6 +48,8 @@ A web component for presenters.
 - `index="{number}"` current slide index (starting from 0)
 - `hashsync` enable syncing index with location hash
 - `hotkey` enable hotkey support
+- `invert` invert color
+- `editor` toggle editor
 
 ### Hotkeys
 
@@ -57,8 +57,10 @@ A web component for presenters.
 - __prev / next__: <kbd>⇦</kbd> / <kbd>⇨</kbd> or <kbd>J</kbd> / <kbd>L</kbd>
 - __first / last__: <kbd>⇧</kbd> / <kbd>⇩</kbd>
 - __invert color (dark theme)__: <kbd>I</kbd> or <kbd>D</kbd>
+- __toggle print view__: <kbd>P</kbd>
+- __toggle editor__: <kbd>ESC</kbd>
 
-### Customize
+### Customization
 
 - __Custom styles__
 
