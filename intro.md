@@ -54,7 +54,7 @@ swipe **left** and **right**
 
 ★ <kbd>P</kbd> ★
 
-then `cmd` + `p` (save as pdf)
+then `CMD+P` (save as pdf)
 
 ---
 

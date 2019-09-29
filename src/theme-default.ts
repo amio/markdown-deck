@@ -81,7 +81,7 @@ export default css`
 
   kbd {
     display: inline-block;
-    min-width: 20px;
+    min-width: 16px;
     text-align: center;
     padding: 2px 12px 6px 12px;
     margin: 0 12px;
