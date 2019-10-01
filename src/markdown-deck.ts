@@ -60,9 +60,12 @@ export class MarkdownDeck extends LitElement {
         @touchstart=${this._handleTouchStart}
         @touchend=${this._handleTouchEnd} >
         ${this.editing ? this._renderEditor() : null}
-        ${this.printing
-          ? renderSlides(this._pages)
-          : renderSlide(this._pages[this.index])
+        ${
+          this.markdown === undefined && this.hotkey
+            ? renderBlankHint()
+            : this.printing
+              ? renderSlides(this._pages)
+              : renderSlide(this._pages[this.index])
         }
       </div>
       <slot @slotchange=${() => this.requestUpdate()}></slot>
@@ -224,7 +227,13 @@ export class MarkdownDeck extends LitElement {
         return this.invert = !this.invert
       case 'Escape':
         this.printing = false
-        return this.editing = !this.editing
+        this.editing = !this.editing
+        if (this.editing) {
+          setTimeout(() => {
+            this.shadowRoot.querySelector('textarea').focus()
+          },0)
+        }
+        return
       case 'KeyP':
         this.editing = false
         this.printing = !this.printing
@@ -270,6 +279,9 @@ export class MarkdownDeck extends LitElement {
   }
 }
 
+function renderBlankHint (): TemplateResult {
+  return renderSlide(`press <kbd>esc</kbd> to start writing`)
+}
 
 function renderSlide (md: string): TemplateResult {
   const markup = marked(md, {
