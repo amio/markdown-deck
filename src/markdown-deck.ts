@@ -226,6 +226,7 @@ export class MarkdownDeck extends LitElement {
       case 'KeyD':
         return this.invert = !this.invert
       case 'Escape':
+        this.printing = false
         return this.editing = !this.editing
       case 'KeyP':
         this.editing = false
