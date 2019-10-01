@@ -135,7 +135,8 @@ export class MarkdownDeck extends LitElement {
   }
 
   _handleEditing = (ev: KeyboardEvent | InputEvent) => {
-    if (ev instanceof KeyboardEvent && ev.code !== 'Escape') {
+    if (ev instanceof KeyboardEvent) {
+      if (ev.code === 'Escape' || ev.metaKey || ev.ctrlKey) return
       ev.stopPropagation()
     }
 
