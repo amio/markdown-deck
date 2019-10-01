@@ -44,10 +44,6 @@ export class MarkdownDeck extends LitElement {
 
     this._setScale()
 
-    const slides = this.printing
-      ? html`<div>${repeat(this._pages, renderSlide)}</div>`
-      : renderSlide(this._pages[this.index])
-
     const deckClassNames = {
       invert: this.invert,
       editing: this.editing,
@@ -131,7 +127,7 @@ export class MarkdownDeck extends LitElement {
 
   _updatePages () {
     const markdown = this.markdown || this._readMarkdownScript()
-    this._pages = splitMarkdownToPages(markdown)
+    this._pages = markdown.split(/\n-{3,}\n/)
   }
 
   _handleEditing = (ev: KeyboardEvent | InputEvent) => {
@@ -188,7 +184,7 @@ export class MarkdownDeck extends LitElement {
     fetch(src, { mode: 'cors' })
       .then(resp => {
         if (resp.status === 200) return resp.text()
-        throw new Error(`(fetching ${src}) ${resp.statusText}`)
+        console.error(`(fetching ${src}) ${resp.status}`)
       })
       .then(text => {
         this.markdown = text
@@ -310,14 +306,6 @@ function trimIndent (text: string): string {
 
   const indentChars = lines[0].substr(0, indentCount)
   return lines.map(line => line.replace(indentChars, '')).join('\n')
-}
-
-function splitMarkdownToPages (markdown: string): Array<string> {
-  const pages = markdown
-    .split(/\n-{3,}\n/) // page break
-    .filter(page => Boolean(page.trim()))
-
-  return pages
 }
 
 function setLocationHash (hash: any) {
