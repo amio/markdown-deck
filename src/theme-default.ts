@@ -81,15 +81,15 @@ export default css`
 
   kbd {
     display: inline-block;
-    min-width: 16px;
+    min-width: 18px;
     text-align: center;
-    padding: 2px 12px 6px 12px;
-    margin: 0 12px;
+    padding: 0 8px 4px 8px;
+    margin: 0 6px;
     color: #444d56;
     background-color: #fafbfc;
     border: 1px solid #c6cbd1;
     border-bottom-color: #959da5;
-    box-shadow: inset 0 -5px 0 #959da5;
-    border-radius: 10px;
+    box-shadow: inset 0 -3px 0 #959da5;
+    border-radius: 9px;
 }
 `

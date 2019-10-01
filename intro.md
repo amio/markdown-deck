@@ -6,8 +6,6 @@
 
 A __web component__ for __presenters__
 
----
-
 ```html
 <markdown-deck markdown="# 🦄" />
 ```
@@ -18,15 +16,13 @@ A __web component__ for __presenters__
 
 ---
 
-## prev / next
+prev / next <kbd>left</kbd> / <kbd>right</kbd>
 
-<kbd>🠜</kbd> / <kbd>🠞</kbd>
+first / last <kbd>up</kbd> / <kbd>down</kbd>
 
----
-
-## first / last
-
-<kbd>🠝</kbd> / <kbd>🠟</kbd>
+<style>
+  .slide { font-family: monospace !important; }
+</style>
 
 ---
 
@@ -108,6 +104,10 @@ then `CMD+P` (save as pdf)
   </style>
 </markdown-deck>
 ```
+
+## More usage
+
+https://github.com/amio/markdown-deck
 
 ---
 

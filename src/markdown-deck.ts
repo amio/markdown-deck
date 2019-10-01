@@ -286,8 +286,8 @@ function renderSlide (md: string): TemplateResult {
   })
 
   return html`
-    <div class="slide-wrap">
-      <section class="slide">${unsafeHTML(markup)}</section>
+    <div class="slide">
+      <section class="content">${unsafeHTML(markup)}</section>
     </div>
   `
 }
@@ -356,14 +356,14 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
     .print-wrap {
       height: 100%;
     }
-    .slide-wrap {
+    .slide {
       height: 100%;
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .slide {
+    .content {
       width: ${ORIGINAL_WIDTH}px;
       height: ${ORIGINAL_HEIGHT}px;
       place-self: center;
