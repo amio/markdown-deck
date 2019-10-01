@@ -20,10 +20,6 @@ prev / next <kbd>left</kbd> / <kbd>right</kbd>
 
 first / last <kbd>up</kbd> / <kbd>down</kbd>
 
-<style>
-  .slide { font-family: monospace !important; }
-</style>
-
 ---
 
 ## if you are on mobile
@@ -104,6 +100,8 @@ then `CMD+P` (save as pdf)
   </style>
 </markdown-deck>
 ```
+
+---
 
 ## More usage
 

@@ -3,7 +3,14 @@ import { LitElement, html, css, property, customElement, unsafeCSS, CSSResult, T
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import { classMap } from 'lit-html/directives/class-map'
 import { repeat } from 'lit-html/directives/repeat'
+
 import Prism from 'prismjs'
+import 'prismjs/components/prism-python'
+import 'prismjs/components/prism-bash'
+import 'prismjs/components/prism-go'
+import 'prismjs/components/prism-sql'
+import 'prismjs/components/prism-rust'
+import 'prismjs/components/prism-csharp'
 
 import themeCodeDefault from './theme-code-default'
 import themeDefault from './theme-default'

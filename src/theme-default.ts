@@ -83,7 +83,7 @@ export default css`
     display: inline-block;
     min-width: 18px;
     text-align: center;
-    padding: 0 8px 4px 8px;
+    padding: 0 8px 2px 8px;
     margin: 0 6px;
     color: #444d56;
     background-color: #fafbfc;
