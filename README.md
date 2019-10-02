@@ -49,7 +49,7 @@ A web component for presenters.
 - `hashsync` enable syncing index with location hash
 - `hotkey` enable hotkey support
 - `invert` invert color
-- `editor` toggle editor
+- `editing` toggle editor
 
 ### Hotkeys
 

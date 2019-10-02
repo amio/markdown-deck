@@ -73,7 +73,6 @@ then `CMD+P` (save as pdf)
   index="0"
   hashsync
   hotkey
-  editor
 ></markdown-deck>
 ```
 
@@ -85,7 +84,6 @@ then `CMD+P` (save as pdf)
 - `index="0"` Slide index
 - `hashsync` Sync location hash with index
 - `hotkey` Enable hotkeys
-- `editor` Open editor
 
 ---
 
@@ -111,7 +109,9 @@ https://github.com/amio/markdown-deck
 
 # The CLI
 
-*to be announced*
+`npm install eloc`
+
+_the eloquence cli_
 
 ---
 
