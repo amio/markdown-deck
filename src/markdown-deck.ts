@@ -125,6 +125,38 @@ export class MarkdownDeck extends LitElement {
     return watched.some(attr => changedProps.has(attr))
   }
 
+  updated (changedProps) {
+    // event: change
+    if (changedProps.has('markdown')) {
+      this._dispatchEvent('change', {
+        oldValue: changedProps.get('markdown'),
+        newValue: this.markdown
+      })
+    }
+
+    // event: editor-toggle
+    if (changedProps.has('editing')) {
+      this._dispatchEvent('editor-toggle', this.editing)
+    }
+
+    // event: navigation
+    if (changedProps.has('index')) {
+      this._dispatchEvent('navigation', {
+        from: changedProps.get('index'),
+        to: this.index
+      })
+    }
+  }
+
+  _dispatchEvent (name: string, detail: any) {
+    // console.info('dispatch event:', name, detail)
+    this.dispatchEvent(new CustomEvent(name, {
+      detail,
+      bubbles: true,
+      composed: true
+    }))
+  }
+
   _readMarkdownScript () {
     const scriptTag = this.querySelector('script[type="text/markdown"]')
     return scriptTag ? trimIndent(scriptTag.textContent) : ''
@@ -204,7 +236,6 @@ export class MarkdownDeck extends LitElement {
   }
 
   _handleKeydown = (ev: KeyboardEvent) => {
-    // console.log(ev.code)
     if (ev.target !== this && ev.target !== document.body || ev.metaKey) {
       return
     }
