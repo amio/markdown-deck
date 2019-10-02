@@ -390,6 +390,7 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
       box-sizing: border-box;
       background-color: #F7F7F7;
       font: 16px/1.6em monospace;
+      resize: none;
     }
     .editor:focus {
       color: #111;
