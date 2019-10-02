@@ -379,12 +379,11 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
       height: 100%;
       width: 100%;
       display: grid;
-      background-color: white;
     }
-    #deck.invert {
+    #deck.invert .slide {
       filter: invert(100%);
     }
-    #deck.invert img {
+    #deck.invert .slide img {
       filter: invert(100%);
     }
     #deck.editing {
@@ -402,6 +401,7 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
       display: flex;
       align-items: center;
       justify-content: center;
+      background-color: white;
     }
     .content {
       width: ${ORIGINAL_WIDTH}px;
