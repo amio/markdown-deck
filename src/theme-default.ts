@@ -14,16 +14,17 @@ export default css`
     margin-top: 0;
   }
 
-  h1 { font: 3.2em/1.4em var(--font-family) }
-  h2 { font: 2.1em/1.4em var(--font-family) }
-  h3 { font: 1.6em/1.4em var(--font-family) }
+  h1 { font: 2.6em/1.4em var(--font-family) }
+  h2 { font: 1.8em/1.4em var(--font-family) }
+  h3 { font: 1.5em/1.4em var(--font-family) }
   h4 { font: 1.2em/1.6em var(--font-family) }
   h5 { font: 1.0em/1.6em var(--font-family) }
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
     letter-spacing: -0.01em;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.8em;
+    margin-top: 0.2em;
   }
 
   h1 {
