@@ -15,8 +15,10 @@ import 'prismjs/components/prism-csharp'
 import themeCodeDefault from './theme-code-default'
 import themeDefault from './theme-default'
 
-const ORIGINAL_WIDTH = 640
-const ORIGINAL_HEIGHT = 400
+const orienPortrait = window.innerHeight > window.innerWidth
+
+const ORIGINAL_WIDTH = orienPortrait ? 400 : 640
+const ORIGINAL_HEIGHT = orienPortrait ? 640 : 400
 
 @customElement('markdown-deck')
 export class MarkdownDeck extends LitElement {
@@ -53,8 +55,9 @@ export class MarkdownDeck extends LitElement {
 
     const deckClassNames = {
       invert: this.invert,
-      editing: this.editing,
-      printing: this.printing
+      printing: this.printing,
+      editing: this.editing && window.innerWidth > 960,
+      editor: this.editing && window.innerWidth <= 960
     }
 
     return html`
@@ -179,7 +182,7 @@ export class MarkdownDeck extends LitElement {
     }
 
     // sync deck with editor
-    const editor: HTMLTextAreaElement = this.shadowRoot.querySelector('.editor')
+    const editor: HTMLTextAreaElement = this.shadowRoot.querySelector('textarea')
     const textBeforeCaret = editor.value.substr(0, editor.selectionStart)
     const pageIndex = textBeforeCaret.split('\n---\n').length - 1
     this.markdown = editor.value
@@ -215,9 +218,7 @@ export class MarkdownDeck extends LitElement {
     const { width: deckWidth, height } = this.getBoundingClientRect()
     const width = this.editing ? deckWidth * 0.66 : deckWidth
 
-    const maxScale = width > height
-      ? Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
-      : Math.min(width / ORIGINAL_HEIGHT, height / ORIGINAL_WIDTH)
+    const maxScale = Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
 
     this._scale = maxScale * 0.9
   }
@@ -378,7 +379,6 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
     #deck {
       height: 100%;
       width: 100%;
-      display: grid;
     }
     #deck.invert .slide {
       filter: invert(100%);
@@ -387,10 +387,11 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
       filter: invert(100%);
     }
     #deck.editing {
+      display: grid;
       grid-template-columns: 1fr 2fr;
     }
-    #deck.printing {
-      display: block;
+    #deck.editor .slide .content {
+      display: none;
     }
     .print-wrap {
       height: 100%;
