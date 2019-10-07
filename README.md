@@ -2,10 +2,11 @@
 
 A web component for presenters.
 
-- Customizable with web standard
-- Keyboard shortcuts & touch gestures
-- Dark mode for all theme
-- Inline editor
+- Auto screen fitting & keyboard navigation
+- Mobile view & touch navigation
+- Dark mode
+- Print view
+- Live editor
 
 ## Usage
 
@@ -47,9 +48,10 @@ A web component for presenters.
 - `src="{string}"` load markdown file from url
 - `index="{number}"` current slide index (starting from 0)
 - `hashsync` enable syncing index with location hash
-- `hotkey` enable hotkey support
+- `hotkey` enable hotkey navigation
 - `invert` invert color
 - `editing` toggle editor
+- `printing` toggle print view
 
 ### Hotkeys
 
