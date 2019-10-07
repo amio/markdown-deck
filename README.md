@@ -1,5 +1,9 @@
 # &lt;markdown-deck />
 
+[![npm version][npm-src]][npm-href]
+[![Bundle size][bundlephobia-src]][bundlephobia-href]
+[![License][license-src]][license-href]
+
 A web component for presenters.
 
 - Auto screen fitting & keyboard navigation
@@ -75,3 +79,10 @@ A web component for presenters.
       </style>
     </markdown-deck>
     ```
+
+[npm-src]: https://badgen.net/npm/v/markdown-deck
+[npm-href]: https://www.npmjs.com/package/markdown-deck
+[bundlephobia-src]: https://badgen.net/bundlephobia/min/markdown-deck
+[bundlephobia-href]: https://bundlephobia.com/result?p=markdown-deck
+[license-src]: https://badgen.net/badge/license/MIT
+[license-href]: LICENSE.md
