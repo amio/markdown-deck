@@ -86,6 +86,7 @@ export class MarkdownDeck extends LitElement {
     return html`
       <textarea class="editor"
         @keydown=${this._handleEditing}
+        @keyup=${this._handleEditing}
         @input=${this._handleEditing}
         @click=${this._handleEditing}
       >${this.markdown}</textarea>
@@ -183,7 +184,7 @@ export class MarkdownDeck extends LitElement {
 
     // sync deck with editor
     const editor: HTMLTextAreaElement = this.shadowRoot.querySelector('textarea')
-    const textBeforeCaret = editor.value.substr(0, editor.selectionStart)
+    const textBeforeCaret = editor.value.substr(0, editor.selectionStart + 2)
     const pageIndex = textBeforeCaret.split('\n---\n').length - 1
     this.markdown = editor.value
     this.index = pageIndex
@@ -237,7 +238,7 @@ export class MarkdownDeck extends LitElement {
   }
 
   _handleKeydown = (ev: KeyboardEvent) => {
-    if (ev.target !== this && ev.target !== document.body || ev.metaKey) {
+    if (ev.target !== this && ev.target !== document.body || ev.metaKey || ev.ctrlKey) {
       return
     }
 
