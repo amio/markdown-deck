@@ -80,6 +80,11 @@ export default css`
     border: none;
   }
 
+  img {
+    max-width: var(--content-width);
+    max-height: var(--content-height);
+  }
+
   kbd {
     display: inline-block;
     min-width: 18px;

@@ -413,6 +413,8 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      --content-width: ${ORIGINAL_WIDTH}px;
+      --content-height: ${ORIGINAL_HEIGHT}px;
     }
     .editor {
       height: 100%;
