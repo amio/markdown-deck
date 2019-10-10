@@ -3,10 +3,12 @@ import { css } from 'lit-element'
 export default css`
   @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,400i,900&display=swap");
   @import url("https://fonts.googleapis.com/css?family=Fira+Code:400,400i,700&display=swap");
+  @import url("https://fonts.googleapis.com/css?family=Merriweather:400i&display=swap");
 
   .slide {
     --font-family: "Roboto", sans-serif;
     --code-font-family: "Fira Code", monospace;
+    --quote-font-family: "Merriweather", serif;
     font: 20px/1.6em var(--font-family);
   }
 
@@ -83,6 +85,17 @@ export default css`
   img {
     max-width: var(--content-width);
     max-height: var(--content-height);
+  }
+
+  blockquote {
+    font-family: var(--quote-font-family);
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  blockquote em {
+    opacity: 0.5;
   }
 
   kbd {
