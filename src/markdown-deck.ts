@@ -1,5 +1,6 @@
 import marked from 'marked'
-import { LitElement, html, css, property, customElement, unsafeCSS, CSSResult, TemplateResult } from 'lit-element'
+import { html, css, property, customElement, unsafeCSS } from 'lit-element'
+import { LitElement, CSSResult, TemplateResult, PropertyValues } from 'lit-element'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import { classMap } from 'lit-html/directives/class-map'
 import { repeat } from 'lit-html/directives/repeat'
@@ -102,10 +103,6 @@ export class MarkdownDeck extends LitElement {
       window.addEventListener('keydown', this._handleKeydown)
     }
 
-    if (this.markdown === undefined && this.src) {
-      this._loadMarkdownFile(this.src)
-    }
-
     if (this.hashsync) {
       this.index = parseInt(location.hash.replace('#', ''), 10) || 0
       setLocationHash(this.index)
@@ -118,18 +115,20 @@ export class MarkdownDeck extends LitElement {
     window.removeEventListener('resize', this._handleResize)
   }
 
-  shouldUpdate (changedProps) {
+  shouldUpdate (changedProps: PropertyValues) {
     if (changedProps.has('markdown')) {
-      // update computed property
       this._updatePages()
-      return true
     }
 
-    const watched = ['markdown', 'index', 'invert', 'editing', 'printing', '_scale', '_pages']
-    return watched.some(attr => changedProps.has(attr))
+    if (changedProps.has('src')) {
+      this.src && this._loadMarkdownFile(this.src)
+    }
+
+    const watchedProps = ['markdown', 'index', 'invert', 'editing', 'printing', '_scale', '_pages']
+    return watchedProps.some(prop => changedProps.has(prop))
   }
 
-  updated (changedProps) {
+  updated (changedProps: PropertyValues) {
     // event: change
     if (changedProps.has('markdown')) {
       this._dispatchEvent('change', {
