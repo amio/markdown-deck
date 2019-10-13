@@ -50,6 +50,7 @@ A web component for presenters.
 
 - `markdown="{string}"` the markdown to parse (override contents in `<script type="text/markdown"`)
 - `src="{string}"` load markdown file from url
+- `css="{string}"` load custom css file from url
 - `index="{number}"` current slide index (starting from 0)
 - `hashsync` enable syncing index with location hash
 - `hotkey` enable hotkey navigation
@@ -68,7 +69,7 @@ A web component for presenters.
 
 ### Customization
 
-- __Custom styles__
+- __Custom global styles__
 
     Use `<style />` inside `<markdown-deck />` to apply custom styles:
 
@@ -79,6 +80,13 @@ A web component for presenters.
       </style>
     </markdown-deck>
     ```
+
+    or load external css file with `css` attribute:
+
+    ```html
+    <markdown-deck css="index.css"></markdown-deck>
+    ```
+
 
 [npm-src]: https://badgen.net/npm/v/markdown-deck
 [npm-href]: https://www.npmjs.com/package/markdown-deck

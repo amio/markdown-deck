@@ -23,22 +23,24 @@ const ORIGINAL_HEIGHT = orienPortrait ? 640 : 400
 
 @customElement('markdown-deck')
 export class MarkdownDeck extends LitElement {
-  @property({ type: String }) markdown: string      // the markdown to parse
+  @property({ type: String }) markdown: string      // markdown content to present
+  @property({ type: String }) src: string           // markdown file url to load
+  @property({ type: String }) css: string           // custom css url to load
   @property({ type: Number }) index = 0             // current slide index
-  @property({ type: String }) src: string           // the markdown file url to load
 
   // feature switch
   @property({ type: Boolean }) hotkey = false       // enable hotkey
   @property({ type: Boolean }) hashsync = false     // sync with location hash
 
   // view mode switch
-  @property({ type: Boolean }) printing = false     // printing mode [TODO]
+  @property({ type: Boolean }) printing = false     // printing mode
   @property({ type: Boolean }) editing = false      // reveal editor
   @property({ type: Boolean }) invert = false       // invert color
 
   // watched private properties
   @property({ type: Number }) _scale = 1            // scale canvas to fit container
   @property({ type: Array }) _pages = []            // split markdown to pages
+  @property({ type: Array }) _stylesheet = ''       // custom stylesheet
 
   // private properties
   _touchStart: { clientX: number, clientY: number } // handle for remove swipe listener
@@ -124,8 +126,17 @@ export class MarkdownDeck extends LitElement {
       this.src && this._loadMarkdownFile(this.src)
     }
 
-    const watchedProps = ['markdown', 'index', 'invert', 'editing', 'printing', '_scale', '_pages']
-    return watchedProps.some(prop => changedProps.has(prop))
+    if (changedProps.has('css')) {
+      this.css && this._loadCSSFile(this.css)
+    }
+
+    // return true if any changed prop is not in omitProps
+    const omitProps = ['_touchStart', 'css', 'src']
+    for (const prop of changedProps.keys()) {
+      if (!omitProps.includes(prop as string)) return true
+    }
+
+    return false
   }
 
   updated (changedProps: PropertyValues) {
@@ -167,7 +178,7 @@ export class MarkdownDeck extends LitElement {
 
   _readCustomStyles () {
     const styleTag = this.querySelector('style')
-    return styleTag ? styleTag.textContent : ''
+    return `${this._stylesheet}\n${styleTag ? styleTag.textContent : ''}`
   }
 
   _updatePages () {
@@ -221,6 +232,17 @@ export class MarkdownDeck extends LitElement {
     const maxScale = Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
 
     this._scale = maxScale * 0.9
+  }
+
+  _loadCSSFile (src: string) {
+    fetch(src, { mode: 'cors' })
+      .then(resp => {
+        if (resp.status === 200) return resp.text()
+        throw new Error(`(fetching ${src}) ${resp.status}`)
+      })
+      .then(text => {
+        this._stylesheet = text
+      })
   }
 
   _loadMarkdownFile (src: string) {

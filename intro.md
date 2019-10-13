@@ -117,6 +117,7 @@ _the eloquence cli_
 
 # THANKS
 
-<a href="https://github.com/amio/markdown-deck">
-  <img src="https://badgen.net/badge/github/amio%2Fmarkdown-deck?icon&label" height="33px" />
-</a>
+[![badge-src]][badge-link]
+
+[badge-src]: https://badgen.net/badge/github/amio%2Fmarkdown-deck?icon&label
+[badge-link]: https://github.com/amio/markdown-deck
