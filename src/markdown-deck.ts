@@ -146,21 +146,7 @@ export class MarkdownDeck extends LitElement {
       })
     }
 
-    if (changedProps.has('markdown')) {
-      // event: change
-      this._dispatchEvent('change', {
-        oldValue: changedProps.get('markdown'),
-        newValue: this.markdown
-      })
-    }
-
     if (changedProps.has('index')) {
-      // event: navigation
-      this._dispatchEvent('navigation', {
-        from: changedProps.get('index'),
-        to: this.index
-      })
-
       // sync with hash
       if (this.hashsync) {
         setLocationHash(this.index)
@@ -339,6 +325,10 @@ export class MarkdownDeck extends LitElement {
     }
 
     this.index = targetIndex
+
+    this._dispatchEvent('navigation', {
+      to: this.index
+    })
 
     if (this.hashsync) {
       setLocationHash(this.index)
