@@ -104,11 +104,6 @@ export class MarkdownDeck extends LitElement {
     if (this.hotkey) {
       window.addEventListener('keydown', this._handleKeydown)
     }
-
-    if (this.hashsync) {
-      this.index = parseInt(location.hash.replace('#', ''), 10) || 0
-      setLocationHash(this.index)
-    }
   }
 
   disconnectedCallback () {
@@ -140,25 +135,32 @@ export class MarkdownDeck extends LitElement {
   }
 
   updated (changedProps: PropertyValues) {
-    // event: change
+    if (changedProps.has('editing')) {
+      // event: editor-toggle
+      this._dispatchEvent('editor-toggle', {
+        open: this.editing
+      })
+    }
+
     if (changedProps.has('markdown')) {
+      // event: change
       this._dispatchEvent('change', {
         oldValue: changedProps.get('markdown'),
         newValue: this.markdown
       })
     }
 
-    // event: editor-toggle
-    if (changedProps.has('editing')) {
-      this._dispatchEvent('editor-toggle', this.editing)
-    }
-
-    // event: navigation
     if (changedProps.has('index')) {
+      // event: navigation
       this._dispatchEvent('navigation', {
         from: changedProps.get('index'),
         to: this.index
       })
+
+      // sync with hash
+      if (this.hashsync) {
+        setLocationHash(this.index)
+      }
     }
   }
 
