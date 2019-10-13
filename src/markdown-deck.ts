@@ -104,6 +104,10 @@ export class MarkdownDeck extends LitElement {
     if (this.hotkey) {
       window.addEventListener('keydown', this._handleKeydown)
     }
+
+    if (this.hashsync) {
+      this.index = parseInt(location.hash.replace('#', ''), 10) || 0
+    }
   }
 
   disconnectedCallback () {
