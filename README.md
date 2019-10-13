@@ -87,6 +87,9 @@ A web component for presenters.
     <markdown-deck css="index.css"></markdown-deck>
     ```
 
+## See Also
+
+- [eloc][eloc-href]: Eloquence cli.
 
 [npm-src]: https://badgen.net/npm/v/markdown-deck
 [npm-href]: https://www.npmjs.com/package/markdown-deck
@@ -94,3 +97,4 @@ A web component for presenters.
 [bundlephobia-href]: https://bundlephobia.com/result?p=markdown-deck
 [license-src]: https://badgen.net/badge/license/MIT
 [license-href]: LICENSE.md
+[eloc-href]: https://github.com/amio/eloc
