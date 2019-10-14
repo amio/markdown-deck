@@ -6,6 +6,8 @@
   "main": "dist/markdown-deck.min.js",
   "license": "MIT",
   "scripts": {
+    "pretest": "tsc src/markdeck.ts --outDir dist",
+    "test": "tape test/*.js",
     "start": "bili -w --format iife & es-dev-server -a index.html -o",
     "build": "rm -rf dist && bili --format iife --minify",
     "build-deck": "rm -rf public && mkdir public && cp -R dist public && cp *.html deck.* public",
@@ -16,12 +18,13 @@
     "lit-element": "2.2.1",
     "lit-html": "^1.1.2",
     "marked": "^0.7.0",
-    "prismjs": "^1.17.1"
+    "prismjs": "^1.17.1",
+    "tape": "^4.11.0"
   },
   "devDependencies": {
     "bili": "^4.8.1",
     "es-dev-server": "^1.18.3",
     "rollup-plugin-typescript2": "^0.24.3",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.0-beta"
   }
 }

@@ -13,7 +13,7 @@ import 'prismjs/components/prism-sql'
 import 'prismjs/components/prism-rust'
 import 'prismjs/components/prism-csharp'
 
-import { splitMarkdownToPages } from './markdeck'
+import { splitMarkdownToPages, getRangeByIndex } from './markdeck'
 import themeCodeDefault from './theme-code-default'
 import themeDefault from './theme-default'
 
@@ -148,7 +148,7 @@ export class MarkdownDeck extends LitElement {
     }
 
     if (changedProps.has('editing') && this.editing) {
-      this.shadowRoot.querySelector('textarea').focus()
+      this._setEditorSelection()
     }
 
     if (changedProps.has('index')) {
@@ -157,6 +157,13 @@ export class MarkdownDeck extends LitElement {
         setLocationHash(this.index)
       }
     }
+  }
+
+  _setEditorSelection () {
+    const textarea = this.shadowRoot.querySelector('textarea')
+    const range = getRangeByIndex(this.markdown, this.index)
+    textarea.setSelectionRange(...range)
+    textarea.focus()
   }
 
   _dispatchEvent (name: string, detail: any) {
