@@ -13,6 +13,7 @@ import 'prismjs/components/prism-sql'
 import 'prismjs/components/prism-rust'
 import 'prismjs/components/prism-csharp'
 
+import { splitMarkdownToPages } from './markdeck'
 import themeCodeDefault from './theme-code-default'
 import themeDefault from './theme-default'
 
@@ -146,6 +147,10 @@ export class MarkdownDeck extends LitElement {
       })
     }
 
+    if (changedProps.has('editing') && this.editing) {
+      this.shadowRoot.querySelector('textarea').focus()
+    }
+
     if (changedProps.has('index')) {
       // sync with hash
       if (this.hashsync) {
@@ -175,7 +180,7 @@ export class MarkdownDeck extends LitElement {
 
   _updatePages () {
     const markdown = this.markdown || this._readMarkdownScript()
-    this._pages = markdown.split(/\n-{3,}\n/)
+    this._pages = splitMarkdownToPages(markdown)
   }
 
   _handleEditing = (ev: KeyboardEvent | InputEvent) => {
@@ -187,10 +192,9 @@ export class MarkdownDeck extends LitElement {
     // sync deck with editor
     const editor: HTMLTextAreaElement = this.shadowRoot.querySelector('textarea')
     const textBeforeCaret = editor.value.substr(0, editor.selectionStart + 2)
-    const pageIndex = textBeforeCaret.split('\n---\n').length - 1
+    const pageIndex = splitMarkdownToPages(textBeforeCaret).length - 1
     this.markdown = editor.value
     this.index = pageIndex
-    this._updatePages()
   }
 
   _handleTouchStart = (ev: TouchEvent) => {
@@ -281,11 +285,6 @@ export class MarkdownDeck extends LitElement {
       case 'Escape':
         this.printing = false
         this.editing = !this.editing
-        if (this.editing) {
-          setTimeout(() => {
-            this.shadowRoot.querySelector('textarea').focus()
-          },0)
-        }
         return
       case 'KeyP':
         this.editing = false
