@@ -71,8 +71,8 @@ then `CMD+P` (save as pdf)
 <markdown-deck
   markdown="# Title" 
   index="0"
-  hashsync
   hotkey
+  hashsync
 ></markdown-deck>
 ```
 
@@ -80,10 +80,17 @@ then `CMD+P` (save as pdf)
 
 *Attributes*
 
-- `markdown="# Title"` The raw markdown
+- `markdown="# Title"` The markdown
 - `index="0"` Slide index
-- `hashsync` Sync location hash with index
 - `hotkey` Enable hotkeys
+- `hashsync` Sync with location hash
+
+---
+
+*Attributes*
+
+- `src="deck.md"` Load external markdown file
+- `css="deck.css"` Load custom css file
 
 ---
 
