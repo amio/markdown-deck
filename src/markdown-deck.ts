@@ -148,7 +148,7 @@ export class MarkdownDeck extends LitElement {
     }
 
     if (changedProps.has('editing') && this.editing) {
-      this._setEditorSelection()
+      this._syncEditorSelection()
     }
 
     if (changedProps.has('index')) {
@@ -159,10 +159,11 @@ export class MarkdownDeck extends LitElement {
     }
   }
 
-  _setEditorSelection () {
+  _syncEditorSelection () {
     const textarea = this.shadowRoot.querySelector('textarea')
-    const range = getRangeByIndex(this.markdown, this.index)
-    textarea.setSelectionRange(...range)
+    const [start, end] = getRangeByIndex(this.markdown, this.index)
+    scrollTextareaTo(textarea, end)
+    textarea.setSelectionRange(start, end)
     textarea.focus()
   }
 
@@ -391,6 +392,13 @@ function setLocationHash (hash: any) {
   } else {
     location.hash = hashString
   }
+}
+
+function scrollTextareaTo (textarea: HTMLTextAreaElement, position: number) {
+  const content = textarea.value
+  textarea.value = content.substr(0, position)
+  textarea.scrollTop = Number.MAX_SAFE_INTEGER
+  textarea.value = content
 }
 
 function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
