@@ -87,7 +87,7 @@ then `CMD+P` (save as pdf)
 
 ---
 
-*Attributes*
+*More Attributes*
 
 - `src="deck.md"` Load external markdown file
 - `css="deck.css"` Load css file for customization
@@ -122,7 +122,7 @@ _write style tag within markdown_
 
 <style>
 .slide {
-  background: url(https://el-capitan.now.sh);
+  background: url(https://el-capitan.now.sh) center;
   background-size: cover;
 }
 .content { filter: invert() }
@@ -131,17 +131,15 @@ code { opacity: 0.8 }
 
 ---
 
-## More usage
+## More Usage
 
 https://github.com/amio/markdown-deck
 
 ---
 
-# The CLI
+## The Eloquence CLI
 
 `npm install eloc`
-
-_the eloquence cli_
 
 ---
 
