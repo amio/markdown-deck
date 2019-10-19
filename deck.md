@@ -90,7 +90,7 @@ then `CMD+P` (save as pdf)
 *Attributes*
 
 - `src="deck.md"` Load external markdown file
-- `css="deck.css"` Load custom css file
+- `css="deck.css"` Load css file for customization
 
 ---
 
@@ -105,6 +105,29 @@ then `CMD+P` (save as pdf)
   </style>
 </markdown-deck>
 ```
+
+---
+
+## Per Slide Styles
+
+```
+_write style tag within markdown_
+
+<style>
+  .slide { background: url(...) }
+  .content { filter: invert() }
+  code { opacity: 0.8 }
+</style>
+```
+
+<style>
+.slide {
+  background: url(https://el-capitan.now.sh);
+  background-size: cover;
+}
+.content { filter: invert() }
+code { opacity: 0.8 }
+</style>
 
 ---
 

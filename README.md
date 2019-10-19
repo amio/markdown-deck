@@ -87,6 +87,20 @@ A web component for presenters.
     <markdown-deck css="index.css"></markdown-deck>
     ```
 
+- __Custom per-slide style__
+
+    Write `<style />` within markdown content:
+
+    ```
+    # Title
+
+    <style>
+      .slide { background: url(...) }
+      .content { filter: invert() }
+      code { opacity: 0.8 }
+    </style>
+    ```
+
 ## See Also
 
 - [eloc][eloc-href]: Eloquence cli.
