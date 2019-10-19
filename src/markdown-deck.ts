@@ -1,21 +1,11 @@
-import marked from 'marked'
 import { html, css, property, customElement, unsafeCSS } from 'lit-element'
 import { LitElement, CSSResult, TemplateResult, PropertyValues } from 'lit-element'
-import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import { classMap } from 'lit-html/directives/class-map'
 import { repeat } from 'lit-html/directives/repeat'
 
-import Prism from 'prismjs'
-import 'prismjs/components/prism-python'
-import 'prismjs/components/prism-bash'
-import 'prismjs/components/prism-go'
-import 'prismjs/components/prism-sql'
-import 'prismjs/components/prism-rust'
-import 'prismjs/components/prism-csharp'
-
 import { splitMarkdownToPages, getRangeByIndex } from './markdeck'
-import themeCodeDefault from './theme-code-default'
-import themeDefault from './theme-default'
+
+import './markdown-slide'
 
 const orienPortrait = window.innerHeight > window.innerWidth
 
@@ -47,7 +37,7 @@ export class MarkdownDeck extends LitElement {
   _touchStart: { clientX: number, clientY: number } // handle for remove swipe listener
 
   static get styles () {
-    return deckStyle(themeDefault, themeCodeDefault)
+    return deckStyle()
   }
 
   render () {
@@ -76,10 +66,10 @@ export class MarkdownDeck extends LitElement {
         ${this.editing ? this._renderEditor() : null}
         ${
           this.markdown === undefined && this.hotkey
-            ? renderBlankHint()
+            ? this._renderBlankHint()
             : this.printing
-              ? renderSlides(this._pages)
-              : renderSlide(this._pages[this.index])
+              ? this._renderSlides(this._pages)
+              : this._renderSlide(this._pages[this.index])
         }
       </div>
       <slot @slotchange=${() => this.requestUpdate()}></slot>
@@ -95,6 +85,26 @@ export class MarkdownDeck extends LitElement {
         @click=${this._handleEditing}
       >${this.markdown}</textarea>
     `
+  }
+
+  _renderBlankHint (): TemplateResult {
+    return this._renderSlide(`press <kbd>esc</kbd> to start writing`)
+  }
+
+  _renderSlide = (md: string): TemplateResult => {
+    return html`
+      <markdown-slide
+        markdown=${md}
+        scale=${this._scale}
+        css=${this._stylesheet}
+        ?invert=${this.invert}
+      >
+      </markdown-slide>
+    `
+  }
+
+  _renderSlides (mds: Array<string>): TemplateResult {
+    return html`<div class="print-wrap">${repeat(mds, this._renderSlide)}</div>`
   }
 
   connectedCallback () {
@@ -230,8 +240,8 @@ export class MarkdownDeck extends LitElement {
   }
 
   _setScale () {
-    const { width: deckWidth, height } = this.getBoundingClientRect()
-    const width = this.editing ? deckWidth * 0.66 : deckWidth
+    const { width: slideWidth, height } = this.getBoundingClientRect()
+    const width = this.editing ? slideWidth * 0.66 : slideWidth
 
     const maxScale = Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
 
@@ -343,33 +353,6 @@ export class MarkdownDeck extends LitElement {
   }
 }
 
-function renderBlankHint (): TemplateResult {
-  return renderSlide(`press <kbd>esc</kbd> to start writing`)
-}
-
-function renderSlide (md: string): TemplateResult {
-  const markup = marked(md, {
-    highlight: function (code: string, lang: string) {
-      try {
-        return Prism.highlight(code, Prism.languages[lang || 'markup'])
-      } catch (e) {
-        console.warn(`[highlight error] lang:${lang} index:${this.index}`)
-        return code
-      }
-    }
-  })
-
-  return html`
-    <div class="slide">
-      <section class="content">${unsafeHTML(markup)}</section>
-    </div>
-  `
-}
-
-function renderSlides (mds: Array<string>): TemplateResult {
-  return html`<div class="print-wrap">${repeat(mds, renderSlide)}</div>`
-}
-
 function trimIndent (text: string): string {
   const lines = text.split('\n')
 
@@ -401,7 +384,7 @@ function scrollTextareaTo (textarea: HTMLTextAreaElement, position: number) {
   textarea.value = content
 }
 
-function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
+function deckStyle (): CSSResult {
   return css`
     :host {
       display: block;
@@ -412,12 +395,6 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
       height: 100%;
       width: 100%;
     }
-    #deck.invert .slide {
-      filter: invert(100%);
-    }
-    #deck.invert .slide img {
-      filter: invert(100%);
-    }
     #deck.editing {
       display: grid;
       grid-template-columns: 1fr 2fr;
@@ -427,25 +404,6 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
     }
     .print-wrap {
       height: 100%;
-    }
-    .slide {
-      height: 100%;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: white;
-    }
-    .content {
-      width: ${ORIGINAL_WIDTH}px;
-      height: ${ORIGINAL_HEIGHT}px;
-      place-self: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      --content-width: ${ORIGINAL_WIDTH}px;
-      --content-height: ${ORIGINAL_HEIGHT}px;
     }
     .editor {
       height: 100%;
@@ -463,7 +421,5 @@ function deckStyle (theme: CSSResult, codeTheme: CSSResult): CSSResult {
       outline: none;
       box-shadow: inset 0 0 100px #EEE;
     }
-    ${ theme }
-    ${ codeTheme }
   `
 }
