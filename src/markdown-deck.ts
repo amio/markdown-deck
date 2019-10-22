@@ -7,11 +7,6 @@ import { splitMarkdownToPages, getRangeByIndex } from './markdeck'
 
 import './markdown-slide'
 
-const orienPortrait = window.innerHeight > window.innerWidth
-
-const ORIGINAL_WIDTH = orienPortrait ? 400 : 640
-const ORIGINAL_HEIGHT = orienPortrait ? 640 : 400
-
 @customElement('markdown-deck')
 export class MarkdownDeck extends LitElement {
   @property({ type: String }) markdown: string      // markdown content to present
@@ -31,7 +26,7 @@ export class MarkdownDeck extends LitElement {
   // watched private properties
   @property({ type: Number }) _scale = 1            // scale canvas to fit container
   @property({ type: Array }) _pages = []            // split markdown to pages
-  @property({ type: Array }) _stylesheet = ''       // custom stylesheet
+  @property({ type: Array }) _stylesheet: string    // custom stylesheet
 
   // private properties
   _touchStart: { clientX: number, clientY: number } // handle for remove swipe listener
@@ -44,8 +39,6 @@ export class MarkdownDeck extends LitElement {
     if (this._pages.length === 0) {
       return html``
     }
-
-    this._setScale()
 
     const deckClassNames = {
       invert: this.invert,
@@ -235,17 +228,7 @@ export class MarkdownDeck extends LitElement {
   }
 
   _handleResize = () => {
-    this._setScale()
     this.requestUpdate()
-  }
-
-  _setScale () {
-    const { width: slideWidth, height } = this.getBoundingClientRect()
-    const width = this.editing ? slideWidth * 0.66 : slideWidth
-
-    const maxScale = Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
-
-    this._scale = maxScale * 0.9
   }
 
   _loadCSSFile (src: string) {
@@ -396,7 +379,7 @@ function deckStyle (): CSSResult {
   return css`
     :host {
       display: block;
-      min-height: ${ORIGINAL_HEIGHT}px;
+      min-height: 400px;
       height: 100%;
     }
     #deck {

@@ -9,7 +9,7 @@ export default css`
     --font-family: "Roboto", sans-serif;
     --code-font-family: "Fira Code", monospace;
     --quote-font-family: "Merriweather", serif;
-    font: 20px/1.6em var(--font-family);
+    font: 40px/1.6em var(--font-family);
   }
 
   .slide > * {
@@ -100,15 +100,15 @@ export default css`
 
   kbd {
     display: inline-block;
-    min-width: 18px;
+    min-width: 1em;
     text-align: center;
-    padding: 0 8px 2px 8px;
-    margin: 0 6px;
+    padding: 0 0.3em 0.07em 0.3em;
+    margin: 0 0.1em;
     color: #444d56;
     background-color: #fafbfc;
     border: 1px solid #c6cbd1;
     border-bottom-color: #959da5;
     box-shadow: inset 0 -3px 0 #959da5;
-    border-radius: 9px;
+    border-radius: 0.4em;
 }
 `
