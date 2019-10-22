@@ -172,7 +172,7 @@ export class MarkdownDeck extends LitElement {
   _syncEditorSelection () {
     const textarea = this.shadowRoot.querySelector('textarea')
     const [start, end] = getRangeByIndex(this.markdown, this.index)
-    scrollTextareaTo(textarea, end)
+    scrollTextareaTo(textarea, start)
     textarea.setSelectionRange(start, end)
     textarea.focus()
   }
@@ -377,11 +377,19 @@ function setLocationHash (hash: any) {
   }
 }
 
-function scrollTextareaTo (textarea: HTMLTextAreaElement, position: number) {
+function scrollTextareaTo (textarea: HTMLTextAreaElement, start: number) {
+  if (start === 0) return
+
   const content = textarea.value
-  textarea.value = content.substr(0, position)
-  textarea.scrollTop = Number.MAX_SAFE_INTEGER
+  textarea.value = content.substr(0, start)
+
+  const originalScrollHeight = textarea.scrollHeight
+  textarea.style.paddingBottom = textarea.scrollHeight + 'px'
+  const expandScrollHeight = textarea.scrollHeight
+  textarea.style.paddingBottom = '15px'
+
   textarea.value = content
+  textarea.scrollTop = expandScrollHeight - originalScrollHeight - 46
 }
 
 function deckStyle (): CSSResult {
@@ -409,7 +417,7 @@ function deckStyle (): CSSResult {
       height: 100%;
       width: 100%;
       color: #666;
-      padding: 1em;
+      padding: 15px 18px;
       border: 0px solid transparent;
       box-sizing: border-box;
       background-color: #F7F7F7;
