@@ -1,6 +1,6 @@
 import marked from 'marked'
-import { html, css, property, customElement, unsafeCSS } from 'lit-element'
-import { LitElement, CSSResult, TemplateResult, PropertyValues } from 'lit-element'
+import { html, css, property, customElement } from 'lit-element'
+import { LitElement, CSSResult } from 'lit-element'
 import { unsafeHTML } from 'lit-html/directives/unsafe-html'
 import { classMap } from 'lit-html/directives/class-map'
 

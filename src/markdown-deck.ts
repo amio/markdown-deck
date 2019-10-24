@@ -56,7 +56,9 @@ export class MarkdownDeck extends LitElement {
         class="${classMap(deckClassNames)}"
         @touchstart=${this._handleTouchStart}
         @touchend=${this._handleTouchEnd} >
-        ${this.editing ? this._renderEditor() : null}
+        <div class="editor-column">
+          ${ this.editing ? this._renderEditor() : null }
+        </div>
         ${
           this.markdown === undefined && this.hotkey
             ? this._renderBlankHint()
@@ -390,19 +392,16 @@ function deckStyle (): CSSResult {
       display: grid;
       grid-template-columns: 1fr 2fr;
     }
-    #deck.editor .slide .content {
-      display: none;
-    }
     .print-wrap {
       height: 100%;
     }
     .editor {
       height: 100%;
       width: 100%;
-      color: #666;
       padding: 15px 18px;
       border: 0px solid transparent;
       box-sizing: border-box;
+      color: #666;
       background-color: #F7F7F7;
       font: 16px/1.6em monospace;
       resize: none;
@@ -411,6 +410,15 @@ function deckStyle (): CSSResult {
       color: #111;
       outline: none;
       box-shadow: inset 0 0 100px #EEE;
+    }
+    #deck.editing .editor {
+      min-width: 300px;
+    }
+
+    @media (max-width: 800px) {
+      #deck.editing .slide {
+        display: none;
+      }
     }
   `
 }
