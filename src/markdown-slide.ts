@@ -15,9 +15,9 @@ import 'prismjs/components/prism-csharp'
 import themeCodeDefault from './theme-code-default'
 import themeDefault from './theme-default'
 
-const orienPortrait = window.innerHeight > window.innerWidth
-const ORIGINAL_WIDTH = orienPortrait ? 800 : 1280
-const ORIGINAL_HEIGHT = orienPortrait ? 1280 : 800
+const orientPortrait = window.innerHeight > window.innerWidth
+const ORIGINAL_WIDTH = orientPortrait ? 800 : 1280
+const ORIGINAL_HEIGHT = orientPortrait ? 1280 : 800
 
 @customElement('markdown-slide')
 export class MarkdownSlide extends LitElement {
@@ -25,7 +25,7 @@ export class MarkdownSlide extends LitElement {
   @property({ type: Boolean }) invert: boolean
   @property({ type: String }) css: string
 
-  private _scale: number
+  @property({ type: Number }) _scale: number
 
   static get styles () {
     return slideStyle(themeDefault, themeCodeDefault)
@@ -60,15 +60,31 @@ export class MarkdownSlide extends LitElement {
     `
   }
 
+  firstUpdated () {
+    const elem = this.shadowRoot.querySelector('.slide')
+    observeResize(elem, this._setScale)
+  }
+
   updated () {
     this._setScale()
   }
 
-  _setScale () {
+  _setScale = () => {
     const { width, height } = this.getBoundingClientRect()
     const maxScale = Math.min(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT)
-
     this._scale = maxScale * 0.9
+  }
+}
+
+declare global {
+  interface Window {
+    ResizeObserver: any;
+  }
+}
+
+function observeResize (elem: Element, cb: Function) {
+  if (window.ResizeObserver) {
+    new window.ResizeObserver(cb).observe(elem)
   }
 }
 
