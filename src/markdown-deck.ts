@@ -17,6 +17,7 @@ export class MarkdownDeck extends LitElement {
   // feature switch
   @property({ type: Boolean }) hotkey = false       // enable hotkey
   @property({ type: Boolean }) hashsync = false     // sync with location hash
+  @property({ type: Boolean }) progressBar = false   // enable progress bar
 
   // view mode switch
   @property({ type: Boolean }) printing = false     // printing mode
@@ -56,6 +57,7 @@ export class MarkdownDeck extends LitElement {
         class="${classMap(deckClassNames)}"
         @touchstart=${this._handleTouchStart}
         @touchend=${this._handleTouchEnd} >
+        ${ this.progressBar ? this._renderProgressBar((this.index + 1) / this._pages.length * 100) : null }
         <div class="editor-column">
           ${ this.editing ? this._renderEditor() : null }
         </div>
@@ -80,6 +82,10 @@ export class MarkdownDeck extends LitElement {
         @click=${this._handleEditing}
       >${this.markdown}</textarea>
     `
+  }
+
+  _renderProgressBar (width: number) {
+    return html`<div class="progress-bar"><div class="active" style="width: ${width}%"></div></div>`
   }
 
   _renderBlankHint (): TemplateResult {
@@ -413,6 +419,19 @@ function deckStyle (): CSSResult {
     }
     #deck.editing .editor {
       min-width: 300px;
+    }
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 8px;
+      background-color: #f1f1f1;
+    }
+    .progress-bar .active {
+      height: 100%;
+      background-color: #2c98f0;
+      border-radius: 0 5px 5px 0;
+      transition:width 1s;
     }
 
     @media (max-width: 800px) {

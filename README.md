@@ -57,6 +57,7 @@ A web component for presenters.
 - `invert` invert color
 - `editing` toggle editor
 - `printing` toggle print view
+- `progressBar` toggle progress bar
 
 ### Hotkeys
 
