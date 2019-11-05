@@ -85,7 +85,7 @@ export class MarkdownDeck extends LitElement {
   }
 
   _renderProgressBar (width: number) {
-    return html`<div class="progress-bar"><div class="active" style="width: ${width}%"></div></div>`
+    return html`<div class="progress-bar"><div class="active ${this.invert ? 'invert' : ''}" style="width: ${width}%"></div></div>`
   }
 
   _renderBlankHint (): TemplateResult {
@@ -421,17 +421,19 @@ function deckStyle (): CSSResult {
       min-width: 300px;
     }
     .progress-bar {
+      z-index: 999;
       position: fixed;
-      top: 0;
+      bottom: 0;
       width: 100%;
-      height: 8px;
-      background-color: #f1f1f1;
+      height: 3px;
     }
     .progress-bar .active {
       height: 100%;
-      background-color: #2c98f0;
-      border-radius: 0 5px 5px 0;
+      background-color: #212121;
       transition:width 1s;
+    }
+    .progress-bar .active.invert {
+      filter: invert(100%);
     }
 
     @media (max-width: 800px) {
