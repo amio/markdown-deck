@@ -62,16 +62,16 @@ export class MarkdownDeck extends LitElement {
         </div>
         <div class="slide-column">
           ${
-            this.progressBar && !this.printing
-              ? this._renderProgressBar((this.index + 1) / this._pages.length * 100)
-              : null
-          }
-          ${
             this.markdown === undefined && this.hotkey
               ? this._renderBlankHint()
               : this.printing
                 ? this._renderSlides(this._pages)
                 : this._renderSlide(this._pages[this.index])
+          }
+          ${
+            this.progressBar && !this.printing
+              ? this._renderProgressBar(this.index / (this._pages.length - 1) * 100)
+              : null
           }
         </div>
       </div>
@@ -91,7 +91,7 @@ export class MarkdownDeck extends LitElement {
   }
 
   _renderProgressBar (width: number) {
-    return html`<div class="progress-bar"><div class="active ${this.invert ? 'invert' : ''}" style="width: ${width}%"></div></div>`
+    return html`<div class="progress-bar"><div class="progress ${this.invert ? 'invert' : ''}" style="width: ${width}%"></div></div>`
   }
 
   _renderBlankHint (): TemplateResult {
@@ -429,19 +429,21 @@ function deckStyle (): CSSResult {
     #deck.editing .editor {
       min-width: 300px;
     }
+    .slide-column {
+      position: relative;
+    }
     .progress-bar {
-      z-index: 999;
-      position: fixed;
-      bottom: 0;
+      position: absolute;
       width: 100%;
       height: 3px;
     }
-    .progress-bar .active {
+    .progress-bar .progress {
       height: 100%;
-      background-color: #212121;
+      opacity: 0.9;
+      background-color: black;
       transition:width 0.6s;
     }
-    .progress-bar .active.invert {
+    .progress-bar .progress.invert {
       filter: invert(100%);
     }
 
