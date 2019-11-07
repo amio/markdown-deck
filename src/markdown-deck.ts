@@ -57,17 +57,23 @@ export class MarkdownDeck extends LitElement {
         class="${classMap(deckClassNames)}"
         @touchstart=${this._handleTouchStart}
         @touchend=${this._handleTouchEnd} >
-        ${ this.progressBar ? this._renderProgressBar((this.index + 1) / this._pages.length * 100) : null }
         <div class="editor-column">
           ${ this.editing ? this._renderEditor() : null }
         </div>
-        ${
-          this.markdown === undefined && this.hotkey
-            ? this._renderBlankHint()
-            : this.printing
-              ? this._renderSlides(this._pages)
-              : this._renderSlide(this._pages[this.index])
-        }
+        <div class="slide-column">
+          ${
+            this.progressBar && !this.printing
+              ? this._renderProgressBar((this.index + 1) / this._pages.length * 100)
+              : null
+          }
+          ${
+            this.markdown === undefined && this.hotkey
+              ? this._renderBlankHint()
+              : this.printing
+                ? this._renderSlides(this._pages)
+                : this._renderSlide(this._pages[this.index])
+          }
+        </div>
       </div>
       <slot @slotchange=${() => this.requestUpdate()}></slot>
     `;
@@ -398,6 +404,9 @@ function deckStyle (): CSSResult {
       display: grid;
       grid-template-columns: 1fr 2fr;
     }
+    #deck.editing .slide-column {
+      min-width: 400px;
+    }
     .print-wrap {
       height: 100%;
     }
@@ -430,7 +439,7 @@ function deckStyle (): CSSResult {
     .progress-bar .active {
       height: 100%;
       background-color: #212121;
-      transition:width 1s;
+      transition:width 0.6s;
     }
     .progress-bar .active.invert {
       filter: invert(100%);
