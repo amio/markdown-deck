@@ -14,10 +14,10 @@ A web component for presenters.
 
 ## Usage
 
-1. Import script from https://unpkg.com/markdown-deck/dist/index.min.js
+1. Import script from https://unpkg.com/markdown-deck
 
     ```html
-    <script type="module" src="https://unpkg.com/markdown-deck/dist/index.min.js"></script>
+    <script type="module" src="https://unpkg.com/markdown-deck"></script>
     ```
 
 2. Put markdown content inside `<script type="text/markdown" />` inside `<markdown-deck />`:
