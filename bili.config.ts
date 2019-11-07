@@ -4,7 +4,7 @@ const config: Config = {
   input: 'src/index.ts',
   output: {
     fileName: 'markdown-deck.min.js',
-    sourceMap: true,
+    sourceMap: false,
   },
   plugins: {
     babel: false
