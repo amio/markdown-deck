@@ -117,6 +117,11 @@ export class MarkdownDeck extends LitElement {
   connectedCallback () {
     super.connectedCallback()
 
+    injectFontCSS('https://rsms.me/inter/inter.css')
+    injectFontCSS('https://fonts.googleapis.com/css?family=Roboto:400,400i,900&display=swap')
+    injectFontCSS('https://fonts.googleapis.com/css?family=Merriweather:400,400i&display=swap')
+    injectFontCSS('https://fonts.googleapis.com/css?family=Fira+Code:400,400i,700&display=swap')
+
     window.addEventListener('resize', this._handleResize)
 
     if (this.hotkey) {
@@ -347,6 +352,23 @@ export class MarkdownDeck extends LitElement {
     if (this.hashsync) {
       setLocationHash(this.index)
     }
+  }
+}
+
+declare global {
+  interface Window {
+    mddSkipLoadingFont?: boolean
+  }
+}
+
+function injectFontCSS (url: string) {
+  if (!window.mddSkipLoadingFont) {
+    const link = window.document.createElement('link')
+    link.href = url
+    link.rel = 'stylesheet'
+    link.type = 'text/css'
+    link.crossOrigin = 'anonymous'
+    window.document.head.appendChild(link);
   }
 }
 

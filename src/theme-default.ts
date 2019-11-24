@@ -1,15 +1,12 @@
 import { css } from 'lit-element'
 
 export default css`
-  @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,400i,900&display=swap");
-  @import url("https://fonts.googleapis.com/css?family=Fira+Code:400,400i,700&display=swap");
-  @import url("https://fonts.googleapis.com/css?family=Merriweather:400i&display=swap");
-
   .slide {
-    --font-family: "Roboto", sans-serif;
+    --font-family: "Inter", "Roboto", sans-serif;
     --code-font-family: "Fira Code", monospace;
     --quote-font-family: "Merriweather", serif;
     font: 40px/1.6em var(--font-family);
+    font-feature-settings: 'calt', 'liga', 'case';
   }
 
   .slide > * {
