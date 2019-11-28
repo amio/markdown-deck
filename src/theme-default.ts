@@ -6,7 +6,7 @@ export default css`
     --code-font-family: "Fira Code", monospace;
     --quote-font-family: "Merriweather", serif;
     font: 40px/1.6em var(--font-family);
-    font-feature-settings: 'calt', 'liga', 'case';
+    font-feature-settings: 'calt', 'liga', 'case', 'ss02', 'ss03';
   }
 
   .slide > * {
