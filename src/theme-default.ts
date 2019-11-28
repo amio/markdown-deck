@@ -73,6 +73,11 @@ export default css`
     text-decoration: underline;
   }
 
+  p + ol,
+  p + ul {
+    margin-top: 0;
+  }
+
   iframe {
     width: 100%;
     height: 100%;
