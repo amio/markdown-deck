@@ -7,7 +7,7 @@
   "unpkg": "dist/markdown-deck.min.js",
   "license": "MIT",
   "scripts": {
-    "pretest": "tsc src/markdeck.ts --outDir dist",
+    "pretest": "tsc src/utils.ts --outDir dist",
     "test": "tape test/*.js",
     "start": "bili -w --format iife-min & es-dev-server -a index.html -o",
     "build": "rm -rf dist && bili --format iife-min,cjs",

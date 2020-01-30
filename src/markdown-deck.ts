@@ -3,7 +3,7 @@ import { LitElement, CSSResult, TemplateResult, PropertyValues } from 'lit-eleme
 import { classMap } from 'lit-html/directives/class-map'
 import { repeat } from 'lit-html/directives/repeat'
 
-import { splitMarkdownToPages, getRangeByIndex } from './markdeck'
+import { splitMarkdownToPages, getRangeByIndex } from './utils'
 
 import './markdown-slide'
 
@@ -183,9 +183,11 @@ export class MarkdownDeck extends LitElement {
 
   _syncEditorSelection () {
     const textarea = this.shadowRoot.querySelector('textarea')
-    const [start, end] = getRangeByIndex(this.markdown, this.index)
-    scrollTextareaTo(textarea, start)
-    textarea.setSelectionRange(start, end)
+    if (this.markdown) {
+      const [start, end] = getRangeByIndex(this.markdown, this.index)
+      scrollTextareaTo(textarea, start)
+      textarea.setSelectionRange(start, end)
+    }
     textarea.focus()
   }
 

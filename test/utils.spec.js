@@ -1,5 +1,5 @@
 const test = require('tape')
-const { splitMarkdownToPages, getRangeByIndex } = require('../dist/markdeck.js')
+const { splitMarkdownToPages, getRangeByIndex } = require('../dist/utils.js')
 
 const md = `
 # Title
