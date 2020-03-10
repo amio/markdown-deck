@@ -38,15 +38,8 @@ export default css`
   }
 
   li {
+    margin: 0.4em auto;
     text-align: left;
-  }
-
-  ul > li {
-      margin-bottom: 0.5em;
-  }
-
-  ul ul > li:last-of-type {
-      margin-bottom: 0.4em;
   }
 
   i {
