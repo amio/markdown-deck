@@ -41,6 +41,10 @@ export default css`
     text-align: left;
   }
 
+  .content > ul > li {
+    margin-bottom: 1em;
+  }
+
   i {
     color: #333;
   }
