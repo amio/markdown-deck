@@ -41,8 +41,8 @@ export default css`
     text-align: left;
   }
 
-  .content > ul > li {
-    margin-bottom: 1em;
+  .content > ul ul > li:last-of-type {
+    margin-bottom: 0.6em;
   }
 
   i {
