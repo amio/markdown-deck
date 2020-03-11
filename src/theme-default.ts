@@ -38,11 +38,8 @@ export default css`
   }
 
   li {
+    margin: 0.4em auto;
     text-align: left;
-  }
-
-  .content > ul > li {
-    margin-bottom: 1em;
   }
 
   i {
