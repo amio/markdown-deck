@@ -9,7 +9,7 @@
   "scripts": {
     "pretest": "tsc src/utils.ts --outDir dist",
     "test": "tape test/*.js",
-    "start": "bili -w --format iife-min & es-dev-server -a index.html -o",
+    "start": "nodemon -w src -e js,ts -x 'npm run now-build && serve public'",
     "build": "rm -rf dist && bili --format iife-min,cjs",
     "build-deck": "rm -rf public && mkdir public && cp -R dist public && cp *.html deck.* public",
     "now-build": "npm run build && npm run build-deck",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "bili": "^4.8.1",
-    "es-dev-server": "^1.44.0",
+    "nodemon": "^2.0.2",
     "rollup-plugin-typescript2": "^0.27.0",
     "tape": "^4.13.2",
     "typescript": "^3.8.3"
