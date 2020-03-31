@@ -423,6 +423,7 @@ function deckStyle (): CSSResult {
     #deck {
       height: 100%;
       width: 100%;
+      outline: none;
     }
     #deck.editing {
       display: grid;
