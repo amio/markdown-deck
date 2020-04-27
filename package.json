@@ -25,7 +25,7 @@
     "bili": "^4.9.0",
     "nodemon": "^2.0.3",
     "rollup-plugin-typescript2": "^0.27.0",
-    "tape": "^4.13.2",
+    "tape": "^5.0.0",
     "typescript": "^3.8.3"
   }
 }
