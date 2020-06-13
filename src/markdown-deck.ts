@@ -117,10 +117,10 @@ export class MarkdownDeck extends LitElement {
   connectedCallback () {
     super.connectedCallback()
 
-    injectFontCSS('https://rsms.me/inter/inter.css')
-    injectFontCSS('https://fonts.googleapis.com/css?family=Roboto:400,400i,900&display=swap')
-    injectFontCSS('https://fonts.googleapis.com/css?family=Merriweather:400,400i&display=swap')
-    injectFontCSS('https://fonts.googleapis.com/css?family=Fira+Code:400,400i,700&display=swap')
+    injectFontCSS('https://fonts.googleapis.com/css2?family=Inter:wght@200..800&display=swap')
+    // injectFontCSS('https://fonts.googleapis.com/css?family=Roboto:400,400i,900&display=swap')
+    // injectFontCSS('https://fonts.googleapis.com/css?family=Merriweather:400,400i&display=swap')
+    // injectFontCSS('https://fonts.googleapis.com/css?family=Fira+Code:400,400i,700&display=swap')
 
     window.addEventListener('resize', this._handleResize)
 
