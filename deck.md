@@ -89,8 +89,8 @@ then `CMD+P` (save as pdf)
 
 *More Attributes*
 
-- `src="deck.md"` Load external markdown file
-- `css="deck.css"` Load css file for customization
+- `src="deck.md"` Load external md file
+- `css="deck.css"` Load custom css file
 
 ---
 

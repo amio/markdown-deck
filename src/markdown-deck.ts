@@ -4,6 +4,8 @@ import { classMap } from 'lit-html/directives/class-map'
 import { repeat } from 'lit-html/directives/repeat'
 
 import { splitMarkdownToPages, getRangeByIndex } from './utils'
+import merriweatherFontCSS from './fonts/merriweather.css'
+import interFontCSS from './fonts/inter.css'
 
 import './markdown-slide'
 
@@ -117,10 +119,8 @@ export class MarkdownDeck extends LitElement {
   connectedCallback () {
     super.connectedCallback()
 
-    injectFontCSS('https://fonts.googleapis.com/css2?family=Inter:wght@200..800&display=swap')
-    // injectFontCSS('https://fonts.googleapis.com/css?family=Roboto:400,400i,900&display=swap')
-    // injectFontCSS('https://fonts.googleapis.com/css?family=Merriweather:400,400i&display=swap')
-    // injectFontCSS('https://fonts.googleapis.com/css?family=Fira+Code:400,400i,700&display=swap')
+    injectWebFont(interFontCSS)
+    injectWebFont(merriweatherFontCSS)
 
     window.addEventListener('resize', this._handleResize)
 
@@ -372,6 +372,13 @@ function injectFontCSS (url: string) {
     link.crossOrigin = 'anonymous'
     window.document.head.appendChild(link);
   }
+}
+
+function injectWebFont (css: string) {
+  const style = window.document.createElement('style')
+  style.appendChild(window.document.createTextNode(css))
+  style.type = 'text/css'
+  window.document.head.appendChild(style)
 }
 
 function trimIndent (text: string): string {

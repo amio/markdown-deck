@@ -1,24 +1,19 @@
 import { css } from 'lit-element'
-import interFontCSS from './fonts/inter.css'
-import merriweatherFontCSS from './fonts/merriweather.css'
 
 export default css`
-  ${interFontCSS}
-  ${merriweatherFontCSS}
   .slide {
     --font-family: "Inter", "Roboto", sans-serif;
     --code-font-family: "Roboto Mono", "Fira Code", "PT Mono", Menlo, monospace;
     --quote-font-family: "Merriweather", serif;
+    font-display: optional;
     font: 40px/1.6em var(--font-family);
     font-feature-settings: 'calt', 'liga', 'case', 'ss02', 'ss03';
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.85);
   }
 
   .slide > * {
     margin-top: 0;
-  }
-
-  p {
-    font-weight: 300;
   }
 
   h1 { font: 2.6em/1.4em var(--font-family) }
@@ -63,6 +58,7 @@ export default css`
     line-height: 1.4em;
     font-family: var(--code-font-family) !important;
     font-weight: bold;
+    color: rgba(0, 0, 0, 0.9);
   }
 
   pre {
@@ -103,6 +99,7 @@ export default css`
   blockquote {
     font-family: var(--quote-font-family);
     font-style: italic;
+    font-weight: 400;
     margin-top: 0;
     margin-bottom: 0;
   }

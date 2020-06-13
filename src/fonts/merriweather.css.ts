@@ -1,6 +1,6 @@
 import { css } from 'lit-element'
 
-export default css`
+export default `
 /* cyrillic-ext */
 @font-face {
   font-family: 'Merriweather';
