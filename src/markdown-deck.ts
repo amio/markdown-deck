@@ -19,7 +19,7 @@ export class MarkdownDeck extends LitElement {
   // feature switch
   @property({ type: Boolean }) hotkey = false       // enable hotkey
   @property({ type: Boolean }) hashsync = false     // sync with location hash
-  @property({ type: Boolean }) progressBar = false   // enable progress bar
+  @property({ type: Boolean }) progressBar = false  // enable progress bar
 
   // view mode switch
   @property({ type: Boolean }) printing = false     // printing mode
@@ -77,6 +77,9 @@ export class MarkdownDeck extends LitElement {
           }
         </div>
       </div>
+      <div id="preload">
+        ${this._renderSlide(this._pages[this.index + 1] || '')}
+      <div>
       <slot @slotchange=${() => this.requestUpdate()}></slot>
     `;
   }
@@ -486,5 +489,7 @@ function deckStyle (): CSSResult {
         display: none;
       }
     }
+
+    #preload { position: absolute; height: 0; width: 0; overflow: hidden }
   `
 }
