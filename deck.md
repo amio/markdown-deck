@@ -12,21 +12,11 @@ A __web component__ for __presenters__
 
 ---
 
-## Meet Shortcuts
+## Keyboard Navigation
 
----
+prev / next: <kbd>left</kbd> <kbd>right</kbd>
 
-prev / next <kbd>left</kbd> / <kbd>right</kbd>
-
-first / last <kbd>up</kbd> / <kbd>down</kbd>
-
----
-
-## if you are on mobile
-
-*Guess what?*
-
-swipe **left** and **right**
+first / last: <kbd>up</kbd> <kbd>down</kbd>
 
 ---
 
@@ -94,20 +84,6 @@ then `CMD+P` (save as pdf)
 
 ---
 
-## Custom Styles
-
-```html
-<markdown-deck markdown="# Title">
-  <style>
-    @import url("https://fonts.googleapis.com/css?family=Roboto");
-    .slide { font-family: "Roboto", serif }
-    strong { color: #63F }
-  </style>
-</markdown-deck>
-```
-
----
-
 ## Per Slide Styles
 
 ```
@@ -137,9 +113,13 @@ https://github.com/amio/markdown-deck
 
 ---
 
+One More Thing
+
 ## The Eloquence CLI
 
-`npm install eloc`
+```
+npm install eloc
+```
 
 ---
 
@@ -147,5 +127,5 @@ https://github.com/amio/markdown-deck
 
 [![badge-src]][badge-link]
 
-[badge-src]: https://badgen.net/badge/github/amio%2Fmarkdown-deck?icon&label
+[badge-src]: https://badgen.net/badge/github/amio%2Fmarkdown-deck?icon&label&scale=2
 [badge-link]: https://github.com/amio/markdown-deck
