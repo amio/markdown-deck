@@ -77,7 +77,7 @@ export class MarkdownDeck extends LitElement {
         </div>
       </div>
       <div id="preload">
-        ${this._renderSlide(this._pages[this.index + 1] || '')}
+        ${this._renderSlides(this._pages)}
       <div>
       <slot @slotchange=${() => this.requestUpdate()}></slot>
     `;
