@@ -4,8 +4,7 @@ import { classMap } from 'lit-html/directives/class-map'
 import { repeat } from 'lit-html/directives/repeat'
 
 import { splitMarkdownToPages, getRangeByIndex } from './utils'
-import merriweatherFontCSS from './fonts/merriweather.css'
-import interFontCSS from './fonts/inter.css'
+import interItalicFontCSS from './fonts/inter.italic.css'
 
 import './markdown-slide'
 
@@ -122,8 +121,11 @@ export class MarkdownDeck extends LitElement {
   connectedCallback () {
     super.connectedCallback()
 
-    injectWebFont(interFontCSS)
-    injectWebFont(merriweatherFontCSS)
+    injectWebFont(interItalicFontCSS)
+
+    injectFontCSS('https://fonts.googleapis.com/css2?family=Inter:wght@200..800&display=swap')
+    injectFontCSS('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;1,300&display=swap')
+    injectFontCSS('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap')
 
     window.addEventListener('resize', this._handleResize)
 

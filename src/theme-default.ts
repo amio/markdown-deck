@@ -5,7 +5,6 @@ export default css`
     --font-family: "Inter", "Roboto", sans-serif;
     --code-font-family: "Roboto Mono", "Fira Code", "PT Mono", Menlo, monospace;
     --quote-font-family: "Merriweather", serif;
-    font-display: optional;
     font: 40px/1.6em var(--font-family);
     font-feature-settings: 'calt', 'liga', 'case', 'ss02', 'ss03';
     font-weight: 300;

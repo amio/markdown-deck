@@ -118,12 +118,12 @@ One More Thing
 ## The Eloquence CLI
 
 ```
-npm install eloc
+npm install -g eloc
 ```
 
 ---
 
-# THANKS
+## THANKS
 
 [![badge-src]][badge-link]
 
