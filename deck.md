@@ -87,10 +87,10 @@ then `CMD+P` (save as pdf)
 ## Per Slide Styles
 
 ```
-_write style tag within markdown_
+### Write inline style tag within markdown
 
 <style>
-  .slide { background: url(...) }
+  .slide { background: url(...) center; background-size: cover }
   .content { filter: invert() }
   code { opacity: 0.8 }
 </style>
