@@ -492,6 +492,6 @@ function deckStyle (): CSSResult {
       }
     }
 
-    #preload { position: absolute; height: 0; width: 0; overflow: hidden }
+    #preload { position: absolute; height: 0; width: 0; overflow: hidden; opacity: 0; pointer-events: none }
   `
 }
