@@ -16,7 +16,7 @@
     "prepack": "npm run build"
   },
   "dependencies": {
-    "lit-element": "2.3.1",
+    "lit-element": "2.4.0",
     "lit-html": "^1.1.2",
     "marked": "^1.1.0",
     "prismjs": "^1.20.0"
