@@ -28,7 +28,7 @@ export class MarkdownDeck extends LitElement {
   // watched private properties
   @property({ type: Number }) _scale = 1            // scale canvas to fit container
   @property({ type: Array }) _pages = []            // split markdown to pages
-  @property({ type: Array }) _stylesheet = ''       // custom stylesheet
+  @property({ type: String }) _stylesheet = ''      // custom stylesheet
 
   // private properties
   _touchStart: { clientX: number, clientY: number } // handle for remove swipe listener
@@ -78,7 +78,7 @@ export class MarkdownDeck extends LitElement {
       </div>
       <div id="preload">
         ${this._renderSlides(this._pages)}
-      <div>
+      </div>
       <slot @slotchange=${() => this.requestUpdate()}></slot>
     `;
   }
