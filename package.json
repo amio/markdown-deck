@@ -1,6 +1,6 @@
 {
   "name": "markdown-deck",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "A web component for presenters",
   "repository": "amio/markdown-deck",
   "main": "dist/markdown-deck.min.js",
